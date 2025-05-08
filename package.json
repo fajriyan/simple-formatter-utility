@@ -1,0 +1,21 @@
+{
+  "name": "simple-formatter-utility",
+  "version": "0.0.1",
+  "description": "A simple utility for formatting dates, numbers, currencies, and more using Intl.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "i18n",
+    "formatter",
+    "utility",
+    "intl",
+    "date",
+    "number"
+  ],
+  "author": "fajriyan",
+  "license": "MIT"
+}
