@@ -1,6 +1,6 @@
 {
   "name": "simple-formatter-utility",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simple utility for formatting dates, numbers, currencies, and more using Intl.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
