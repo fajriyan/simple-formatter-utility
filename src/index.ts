@@ -196,7 +196,7 @@ export function formatTimeAgo(date: Date | string, locale = "en-US") {
     year: 31536000,
   };
 
-  for (const { unit, limit, label } of thresholds) {
+  for (const { limit, label } of thresholds) {
     if (diffInSeconds < limit) {
       const divisor = divisorMap[label];
       const value = Math.floor(diffInSeconds / divisor);

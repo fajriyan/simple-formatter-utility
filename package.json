@@ -1,6 +1,6 @@
 {
-  "name": "simple-formatter-utility",
-  "version": "1.0.0",
+  "name": "@fajriyan/simple-formatter-utility",
+  "version": "1.0.1",
   "description": "A simple utility for formatting dates, numbers, currencies, and more using Intl.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -18,6 +18,9 @@
   ],
   "author": "fajriyan",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/fajriyan/simple-formatter-utility"
