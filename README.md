@@ -1,14 +1,32 @@
-## simple-formatter-utility
+# Simple Formatter Utility
 
-for ES2020 or above
+This package was created because of the unrest that I experienced when I wanted
+to format some things that required long code, therefore I created this package
+to solve that problem, hopefully it can help those of you who have similar
+problems. Recommendation for ES2020 or above
 
-how to install
+For more information, see our
+[GitHub repository](https://github.com/fajriyan/simple-formatter-utility).
+
+[![npm version](https://img.shields.io/npm/v/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
+[![npm downloads](https://img.shields.io/npm/dm/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/fajriyan/simple-formatter-utility)
+[![bundlephobia](https://img.shields.io/bundlephobia/minzip/simple-formatter-utility)](https://bundlephobia.com/result?p=simple-formatter-utility)
+[![license](https://img.shields.io/npm/l/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
+[![TypeScript](https://img.shields.io/npm/types/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
+[![GitHub issues](https://img.shields.io/github/issues/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/issues)
+[![GitHub last commit](https://img.shields.io/github/last-commit/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/commits)
+![ES2020](https://img.shields.io/badge/ES-2020-yellow)
+[![GitHub contributors](https://img.shields.io/github/contributors/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/graphs/contributors)
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-%E2%9D%A4-lightgrey?logo=github)](https://github.com/sponsors/fajriyan)
+
+### Installation
 
 ```
 npm i simple-formatter-utility
 ```
 
-how to use
+### Usage
 
 ```
 import {
@@ -24,6 +42,11 @@ import {
   formatOrdinalNumber,
   formatWeekday,
   formatMonth,
+  formatISODate,
+  formatFileSize,
+  formatDayOfYear,
+  formatTimeAgo,
+  formatTimeZone,
 } from 'simple-formatter-utility';
 
 const today = new Date();
@@ -99,8 +122,22 @@ console.log(formatFileSize(1024)); // "1 KB"
 console.log(formatFileSize(1048576)); // "1 MB"
 console.log(formatFileSize(1500000, "id-ID")); // "1,43 MB"
 
+## Format Day Of Year
+console.log(formatDayOfYear("2025-05-20")); // "140"
+
+## Format Time Ago
+console.log(formatTimeAgo("2025-05-20T12:00:00Z")); // "2 hours ago"
+
+## Format Time Ago Detail
+console.log(formatTimeAgoDetailed(new Date(Date.now() - 90061 * 1000))); // "1 day 1 hour ago"
+
+## Format Time Zone
+console.log(formatTimeZone("2025-05-20T10:00:00Z", "Asia/Jakarta")); // "May 20, 2025, 17:00"
+console.log(formatTimeZone("2025-05-20T10:00:00Z", "America/New_York")); // "May 20, 2025, 06:00"
 
 
 ```
 
-stay tuned for updates on this library
+stay tuned for updates on this package. ✨<br>
+[🛠️ Contribute](https://github.com/fajriyan/simple-formatter-utility/blob/main/CONTRIBUTING.md)
+| [💸 Support Me](https://saweria.co/fajriyan)

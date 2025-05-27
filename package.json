@@ -1,6 +1,6 @@
 {
   "name": "simple-formatter-utility",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "A simple utility for formatting dates, numbers, currencies, and more using Intl.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,5 +17,9 @@
     "number"
   ],
   "author": "fajriyan",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fajriyan/simple-formatter-utility"
+  }
 }

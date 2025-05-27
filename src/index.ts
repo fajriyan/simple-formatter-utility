@@ -159,3 +159,100 @@ export function formatFileSize(bytes: number, locale = "en-US") {
     units[i]
   );
 }
+
+export function formatDayOfYear(date: Date | string) {
+  const current = new Date(date);
+  const start = new Date(current.getFullYear(), 0, 0);
+  const diff =
+    current.getTime() -
+    start.getTime() +
+    (start.getTimezoneOffset() - current.getTimezoneOffset()) * 60 * 1000;
+  const day = Math.floor(diff / (1000 * 60 * 60 * 24));
+  return day;
+}
+
+export function formatTimeAgo(date: Date | string, locale = "en-US") {
+  const now = new Date();
+  const past = new Date(date);
+  const diffInSeconds = Math.floor((now.getTime() - past.getTime()) / 1000);
+
+  type Unit = "second" | "minute" | "hour" | "day" | "month" | "year";
+
+  const thresholds: { limit: number; label: Unit }[] = [
+    { limit: 60, label: "second" },
+    { limit: 3600, label: "minute" },
+    { limit: 86400, label: "hour" },
+    { limit: 2592000, label: "day" },
+    { limit: 31536000, label: "month" },
+    { limit: Infinity, label: "year" },
+  ];
+
+  const divisorMap: Record<Unit, number> = {
+    second: 1,
+    minute: 60,
+    hour: 3600,
+    day: 86400,
+    month: 2592000,
+    year: 31536000,
+  };
+
+  for (const { unit, limit, label } of thresholds) {
+    if (diffInSeconds < limit) {
+      const divisor = divisorMap[label];
+      const value = Math.floor(diffInSeconds / divisor);
+      return new Intl.RelativeTimeFormat(locale, { numeric: "auto" }).format(
+        -value,
+        label
+      );
+    }
+  }
+
+  return new Intl.RelativeTimeFormat(locale).format(0, "second");
+}
+
+export function formatTimeAgoDetailed(date: Date | string, locale = "en-US") {
+  const now = new Date();
+  const past = new Date(date);
+  let diff = Math.floor((now.getTime() - past.getTime()) / 1000); // detik
+
+  if (diff < 5) return "just now";
+
+  const units = [
+    { label: "year", seconds: 31536000 },
+    { label: "month", seconds: 2592000 },
+    { label: "day", seconds: 86400 },
+    { label: "hour", seconds: 3600 },
+    { label: "minute", seconds: 60 },
+    { label: "second", seconds: 1 },
+  ];
+
+  const parts = [];
+
+  for (const unit of units) {
+    const amount = Math.floor(diff / unit.seconds);
+    if (amount > 0) {
+      parts.push(`${amount} ${unit.label}${amount > 1 ? "s" : ""}`);
+      diff -= amount * unit.seconds;
+    }
+    if (parts.length >= 2) break;
+  }
+
+  return parts.join(" ") + " ago";
+}
+
+export function formatTimeZone(
+  date: Date | string,
+  timeZone: string,
+  locale = "en-US",
+  options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }
+) {
+  return new Intl.DateTimeFormat(locale, { ...options, timeZone }).format(
+    new Date(date)
+  );
+}
