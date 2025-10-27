@@ -141,3 +141,4 @@ console.log(formatTimeZone("2025-05-20T10:00:00Z", "America/New_York")); // "May
 stay tuned for updates on this package. ✨<br>
 [🛠️ Contribute](https://github.com/fajriyan/simple-formatter-utility/blob/main/CONTRIBUTING.md)
 | [💸 Support Me](https://saweria.co/fajriyan)
+<!-- // "name": "@fajriyan/simple-formatter-utility", -->

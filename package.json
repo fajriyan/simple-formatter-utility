@@ -1,12 +1,14 @@
 {
-  "name": "@fajriyan/simple-formatter-utility",
-  "version": "1.0.1",
+  "name": "simple-formatter-utility",
+  "version": "1.0.2",
   "description": "A simple utility for formatting dates, numbers, currencies, and more using Intl.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "publish:npm": "npm publish",
+    "publish:github": "npm publish --registry=https://npm.pkg.github.com"
   },
   "keywords": [
     "i18n",
@@ -18,9 +20,6 @@
   ],
   "author": "fajriyan",
   "license": "MIT",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/fajriyan/simple-formatter-utility"
