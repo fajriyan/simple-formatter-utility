@@ -135,10 +135,32 @@ console.log(formatTimeAgoDetailed(new Date(Date.now() - 90061 * 1000))); // "1 d
 console.log(formatTimeZone("2025-05-20T10:00:00Z", "Asia/Jakarta")); // "May 20, 2025, 17:00"
 console.log(formatTimeZone("2025-05-20T10:00:00Z", "America/New_York")); // "May 20, 2025, 06:00"
 
+## Format Elapsed Time
+console.log(formatElapsedTime(45));        // "45s"
+console.log(formatElapsedTime(125));       // "2m 5s"
+console.log(formatElapsedTime(3725));      // "1h 2m 5s"
+console.log(formatElapsedTime(90061));     // "1d 1h 1m 1s"
+
+## Format Relative Duration
+console.log(formatRelativeDuration("2025-05-01", "2025-05-03"));  // "2d"
+console.log(formatRelativeDuration("2025-05-01T00:00:00", "2025-05-01T01:30:00")); // "1h 30m"
+console.log(formatRelativeDuration("2025-05-01T00:00:00", "2025-05-01T00:00:45")); // "45s"
+
+## Format Temperature
+console.log(formatTemperature(25));             // "25°C"
+console.log(formatTemperature(77, "fahrenheit")); // "77°F"
+console.log(formatTemperature(30.567));         // "30.6°C"
+console.log(formatTemperature(100, "fahrenheit", "fr-FR")); // "100 °F"
+
+
+## Format Timezone Offset
+console.log(formatTimezoneOffset()); // "UTC+07:00" (tergantung zona lokal sistem)
+console.log(formatTimezoneOffset("2025-05-20T10:00:00Z")); // "UTC+00:00"
 
 ```
 
 stay tuned for updates on this package. ✨<br>
 [🛠️ Contribute](https://github.com/fajriyan/simple-formatter-utility/blob/main/CONTRIBUTING.md)
 | [💸 Support Me](https://saweria.co/fajriyan)
+
 <!-- // "name": "@fajriyan/simple-formatter-utility", -->

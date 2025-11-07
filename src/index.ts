@@ -256,3 +256,51 @@ export function formatTimeZone(
     new Date(date)
   );
 }
+
+export function formatElapsedTime(seconds: number) {
+  const days = Math.floor(seconds / 86400);
+  const hours = Math.floor((seconds % 86400) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+
+  const parts = [];
+  if (days) parts.push(`${days}d`);
+  if (hours) parts.push(`${hours}h`);
+  if (minutes) parts.push(`${minutes}m`);
+  if (secs || parts.length === 0) parts.push(`${secs}s`);
+  return parts.join(" ");
+}
+
+export function formatRelativeDuration(
+  start: Date | string,
+  end: Date | string
+) {
+  const diffSec =
+    Math.abs(new Date(end).getTime() - new Date(start).getTime()) / 1000;
+  return formatElapsedTime(diffSec);
+}
+
+export function formatTemperature(
+  value: number,
+  unit: "celsius" | "fahrenheit" = "celsius",
+  locale = "en-US"
+) {
+  return new Intl.NumberFormat(locale, {
+    style: "unit",
+    unit,
+    unitDisplay: "narrow",
+    maximumFractionDigits: 1,
+  }).format(value);
+}
+
+export function formatTimezoneOffset(date: Date | string = new Date()) {
+  const offset = new Date(date).getTimezoneOffset();
+  const sign = offset <= 0 ? "+" : "-";
+  const hours = Math.floor(Math.abs(offset) / 60)
+    .toString()
+    .padStart(2, "0");
+  const minutes = Math.abs(offset % 60)
+    .toString()
+    .padStart(2, "0");
+  return `UTC${sign}${hours}:${minutes}`;
+}
