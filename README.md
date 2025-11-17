@@ -157,6 +157,70 @@ console.log(formatTemperature(100, "fahrenheit", "fr-FR")); // "100 °F"
 console.log(formatTimezoneOffset()); // "UTC+07:00" (tergantung zona lokal sistem)
 console.log(formatTimezoneOffset("2025-05-20T10:00:00Z")); // "UTC+00:00"
 
+
+
+// =============================
+// Format ISO DateTime
+// =============================
+console.log(formatISODateTime("2025-02-10T14:23:45Z"));
+// "2025-02-10 14:23:45"
+
+console.log(formatISODateTime(new Date()));
+// "2025-11-18 12:45:01" (sesuai waktu sekarang)
+
+
+// =============================
+// Format Quarter
+// =============================
+console.log(formatQuarter("2025-01-15"));
+// "Q1"
+
+console.log(formatQuarter("2025-04-01"));
+// "Q2"
+
+
+// =============================
+// Format Week Number (ISO Week)
+// =============================
+console.log(formatWeekNumber("2025-01-01"));
+// contoh: 1
+
+console.log(formatWeekNumber(new Date()));
+// output sesuai minggu saat ini
+
+
+// =============================
+// Format Phone Number
+// =============================
+console.log(formatPhone("081234567890"));
+// "081-234-567890"
+
+console.log(formatPhone("+62 812-3456-7890"));
+// "062-812-34567890"
+
+
+// =============================
+// Format Boolean Yes/No
+// =============================
+console.log(formatBoolean(true));
+// "Yes"
+
+console.log(formatBoolean(false, "Iya", "Tidak"));
+// "Tidak"
+
+
+// =============================
+// Format RGB → HEX
+// =============================
+console.log(formatRgbToHex(255, 99, 71));
+// "#ff6347"
+
+console.log(formatRgbToHex(0, 0, 0));
+// "#000000"
+
+console.log(formatRgbToHex(12, 200, 150));
+// "#0cc896"
+
 ```
 
 stay tuned for updates on this package. ✨<br>

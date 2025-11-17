@@ -304,3 +304,45 @@ export function formatTimezoneOffset(date: Date | string = new Date()) {
     .padStart(2, "0");
   return `UTC${sign}${hours}:${minutes}`;
 }
+
+
+// Format ISO DateTime (YYYY-MM-DD HH:MM:SS)
+export function formatISODateTime(date: Date | string) {
+  const d = new Date(date);
+  return d.toISOString().replace("T", " ").split(".")[0];
+}
+
+// Format Quarter of Year (Q1, Q2, ...)
+export function formatQuarter(date: Date | string) {
+  const d = new Date(date);
+  return `Q${Math.floor(d.getMonth() / 3) + 1}`;
+}
+
+// Format Week Number (ISO week)
+export function formatWeekNumber(date: Date | string) {
+  const d = new Date(date);
+  const target = new Date(d.valueOf());
+  const dayNr = (d.getDay() + 6) % 7;
+  target.setDate(target.getDate() - dayNr + 3);
+  const firstThursday = new Date(target.getFullYear(), 0, 1);
+  const dayDiff = (target.valueOf() - firstThursday.valueOf()) / 86400000;
+  return Math.floor(dayDiff / 7) + 1;
+}
+
+// Format Phone Number (sederhana)
+export function formatPhone(phone: string) {
+  return phone
+    .replace(/\D/g, "")
+    .replace(/(\d{3})(\d{3})(\d+)/, "$1-$2-$3");
+}
+
+// Format Boolean to Yes/No (atau sesuai locale)
+export function formatBoolean(value: boolean, yes = "Yes", no = "No") {
+  return value ? yes : no;
+}
+
+// Format RGB → HEX
+export function formatRgbToHex(r: number, g: number, b: number) {
+  const toHex = (x: number) => x.toString(16).padStart(2, "0");
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
