@@ -346,3 +346,21 @@ export function formatRgbToHex(r: number, g: number, b: number) {
   const toHex = (x: number) => x.toString(16).padStart(2, "0");
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
+
+export function formatCapitalize(text: string) {
+  if (!text) return "";
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+// Format slug (lowercase + ganti spasi ke -)
+export function formatSlug(text: string) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9\-]/g, "");
+}
+
+export function formatTwoDigit(n: number) {
+  return n.toString().padStart(2, "0");
+}

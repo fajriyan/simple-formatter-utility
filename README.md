@@ -221,6 +221,48 @@ console.log(formatRgbToHex(0, 0, 0));
 console.log(formatRgbToHex(12, 200, 150));
 // "#0cc896"
 
+
+// =============================
+// Format Capitalize
+// =============================
+console.log(formatCapitalize("hello world"));
+// "Hello world"
+
+console.log(formatCapitalize("indonesia"));
+// "Indonesia"
+
+console.log(formatCapitalize("react context"));
+// "React context"
+
+
+
+// =============================
+// Format Slug
+// =============================
+console.log(formatSlug("Hello World"));
+// "hello-world"
+
+console.log(formatSlug("  Produk Baru 2025  "));
+// "produk-baru-2025"
+
+console.log(formatSlug("A&B Special Edition"));
+// "ab-special-edition"
+
+
+
+// =============================
+// Format Two Digit Number
+// =============================
+console.log(formatTwoDigit(1));
+// "01"
+
+console.log(formatTwoDigit(9));
+// "09"
+
+console.log(formatTwoDigit(10));
+// "10"
+
+
 ```
 
 stay tuned for updates on this package. ✨<br>
