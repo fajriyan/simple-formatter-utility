@@ -262,6 +262,103 @@ console.log(formatTwoDigit(9));
 console.log(formatTwoDigit(10));
 // "10"
 
+// =============================
+// Format Truncate
+// =============================
+console.log(formatTruncate("Ini adalah contoh text yang panjang", 20));
+// "Ini adalah contoh t…"
+
+console.log(formatTruncate("Pendek", 20));
+// "Pendek"
+
+
+// =============================
+// Format Title Case
+// =============================
+console.log(formatTitleCase("halo dunia dari javascript"));
+// "Halo Dunia Dari Javascript"
+
+
+// =============================
+// Format Initials
+// =============================
+console.log(formatInitials("Fajriyan Pratama"));
+// "FP"
+
+console.log(formatInitials("Fajriyan Nur Pratama", 3));
+// "FNP"
+
+
+// =============================
+// Format Mask Email
+// =============================
+console.log(formatMaskEmail("fajriyan@gmail.com"));
+// "f***n@gmail.com"
+
+
+// =============================
+// Format Mask Phone
+// =============================
+console.log(formatMaskPhone("081234567890"));
+// "********7890"
+
+console.log(formatMaskPhone("+62 812-3456-7890", 3));
+// "*********890"
+
+
+// =============================
+// Format Clamp Number
+// =============================
+console.log(formatClampNumber(5, 1, 10));
+// 5
+
+console.log(formatClampNumber(0, 1, 10));
+// 1
+
+console.log(formatClampNumber(15, 1, 10));
+// 10
+
+
+// =============================
+// Format JSON Pretty
+// =============================
+console.log(
+  formatJsonPretty({ name: "Fajriyan", age: 25 })
+);
+/*
+{
+  "name": "Fajriyan",
+  "age": 25
+}
+*/
+
+
+// =============================
+// Format File Size (SI)
+// =============================
+console.log(formatFileSizeSI(1000));
+// "1.00 KB"
+
+console.log(formatFileSizeSI(1500000));
+// "1.50 MB"
+
+
+// =============================
+// Format Date Range
+// =============================
+console.log(
+  formatDateRange("2025-01-01", "2025-01-10")
+);
+// "Jan 1, 2025 - Jan 10, 2025"
+
+
+// =============================
+// Format Age
+// =============================
+console.log(formatAge("2000-01-01"));
+// 25  (tergantung tanggal saat dijalankan)
+
+
 
 ```
 
