@@ -453,3 +453,42 @@ export function formatAge(birthDate: Date | string) {
 
   return age;
 }
+
+export function parseCurrency(value: string, locale = "en-US") {
+  const example = new Intl.NumberFormat(locale).format(1111);
+  const clean = value
+    .replace(new RegExp(`[^0-9${example[1]}-]`, "g"), "")
+    .replace(example[1], ".");
+
+  return parseFloat(clean);
+}
+
+export function parseNumber(value: string) {
+  return Number(value.replace(/[^\d.-]/g, ""));
+}
+
+export function parseBoolean(value: unknown) {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "string") {
+    return ["true", "1", "yes"].includes(value.toLowerCase());
+  }
+  return Boolean(value);
+}
+
+export function getUserTimezone() {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+}
+
+export function convertTimezone(date: Date | string, timeZone: string) {
+  return new Date(
+    new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(new Date(date)),
+  );
+}

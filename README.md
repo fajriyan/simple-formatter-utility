@@ -359,6 +359,23 @@ console.log(formatAge("2000-01-01"));
 // 25  (tergantung tanggal saat dijalankan)
 
 
+// =============================
+// Parse Currency
+// =============================
+console.log(parseCurrency("$1,234.56"));
+// 1234.56
+
+console.log(parseCurrency("Rp 10.500", "id-ID"));
+// 10500
+
+
+// =============================
+// Get User Timezone
+// =============================
+console.log(getUserTimezone());
+// "Asia/Jakarta" (tergantung user)
+
+
 
 ```
 
