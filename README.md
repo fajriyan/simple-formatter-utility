@@ -379,6 +379,8 @@ console.log(getUserTimezone());
 
 ```
 
+- [ ] create documentation better
+
 stay tuned for updates on this package. ✨<br>
 [🛠️ Contribute](https://github.com/fajriyan/simple-formatter-utility/blob/main/CONTRIBUTING.md)
 | [💸 Support Me](https://saweria.co/fajriyan)
