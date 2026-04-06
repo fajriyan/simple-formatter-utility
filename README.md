@@ -1,388 +1,571 @@
-# Simple Formatter Utility
+# I18n Formatter Utility
 
-This package was created because of the unrest that I experienced when I wanted
-to format some things that required long code, therefore I created this package
-to solve that problem, hopefully it can help those of you who have similar
-problems. Recommendation for ES2020 or above
-
-For more information, see our
-[GitHub repository](https://github.com/fajriyan/simple-formatter-utility).
+A comprehensive TypeScript utility library for internationalization (i18n)
+formatting using the native Intl API. This package provides easy-to-use
+functions for formatting dates, numbers, currencies, and more with full locale
+support.
 
 [![npm version](https://img.shields.io/npm/v/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
 [![npm downloads](https://img.shields.io/npm/dm/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
-[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/fajriyan/simple-formatter-utility)
-[![bundlephobia](https://img.shields.io/bundlephobia/minzip/simple-formatter-utility)](https://bundlephobia.com/result?p=simple-formatter-utility)
-[![license](https://img.shields.io/npm/l/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
 [![TypeScript](https://img.shields.io/npm/types/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
+[![license](https://img.shields.io/npm/l/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
+[![bundlephobia](https://img.shields.io/bundlephobia/minzip/simple-formatter-utility)](https://bundlephobia.com/result?p=simple-formatter-utility)
 [![GitHub issues](https://img.shields.io/github/issues/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/issues)
 [![GitHub last commit](https://img.shields.io/github/last-commit/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/commits)
-![ES2020](https://img.shields.io/badge/ES-2020-yellow)
-[![GitHub contributors](https://img.shields.io/github/contributors/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/graphs/contributors)
-[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-%E2%9D%A4-lightgrey?logo=github)](https://github.com/sponsors/fajriyan)
 
-### Installation
+## Features
 
+- 🌍 **Full Locale Support**: Uses native Intl API for accurate locale-specific
+  formatting
+- 📅 **Date & Time Formatting**: Comprehensive date, time, and datetime
+  formatting
+- 💰 **Currency & Numbers**: Format currencies, percentages, and numbers with
+  locale awareness
+- 📏 **File Sizes & Units**: Human-readable file sizes and temperature
+  formatting
+- ⏱️ **Relative Time**: "2 hours ago", "in 3 days" style formatting
+- 🔧 **Utility Functions**: Phone masking, email masking, text formatting, and
+  more
+- 📦 **Zero Dependencies**: Built on native browser APIs
+- 🏷️ **TypeScript Support**: Full type definitions included
+
+## Installation
+
+```bash
+npm install simple-formatter-utility
 ```
-npm i simple-formatter-utility
-```
 
-### Usage
+## Quick Start
 
-```
+```typescript
 import {
   formatDate,
-  formatNumber,
   formatCurrency,
-  formatPercent,
-  formatDateTime,
-  formatTime,
-  formatDuration,
+  formatNumber,
   formatRelativeTime,
-  formatCompactNumber,
-  formatOrdinalNumber,
-  formatWeekday,
-  formatMonth,
-  formatISODate,
-  formatFileSize,
-  formatDayOfYear,
-  formatTimeAgo,
-  formatTimeZone,
-} from 'simple-formatter-utility';
-
-const today = new Date();
-
-## Date Format
-console.log(formatDate(today, 'id-ID')); // "8/5/2025"
-console.log(formatDate(today, 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));  // "Thursday, May 8, 2025"
-
-## Time Format
-const now = new Date();
-console.log(formatTime(now)); // Output: ex: "10:45 AM" (untuk locale en-US)
-console.log(formatTime("2025-05-15T21:30:00", "id-ID")); // Output: "21.30" (for Indonesia, 24 jam format)
-
-## Format Date Time
-const now = new Date();
-console.log(formatDateTime(now)); // Output: ex: "May 15, 2025 at 10:45:00 AM"
-console.log(formatDateTime("2025-05-15T21:30:00", "id-ID")); // Output: "15 May 2025 21.30.00"
-
-### custom
-console.log(formatDateTime("2025-05-15T21:30:00", "en-GB", {
-  weekday: "long",
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-  hour: "2-digit",
-  minute: "2-digit"
-})); // Output: "Thursday, 15 May 2025 at 21:30"
-
-## Number Format
-console.log(formatNumber(1234567.89, 'id-ID')); // "1.234.567,89"
-
-## Format Currency
-console.log(formatCurrency(1500000, 'IDR', 'id-ID')); // "Rp1.500.000,00"
-console.log(formatCurrency(100, 'USD', 'en-US'));     // "$100.00"
-
-## Format Percent
-console.log(formatPercent(0.725, 'id-ID')); // "72,5%"
-
-## Format Duration
-console.log(formatDuration(65));      // "00:01:05"
-console.log(formatDuration(3661));    // "01:01:01"
-console.log(formatDuration(86399));   // "23:59:59"
-
-## Format Relative Time
-console.log(formatRelativeTime(new Date(Date.now() - 60000))); // Output: "1 minute ago"
-console.log(formatRelativeTime(new Date(Date.now() + 2 * 60 * 60 * 1000))); // Output: "in 2 hours"
-console.log(formatRelativeTime("2025-05-10")); // Output: "5 days ago" (if now 2025-05-15)
-
-## Format Compact Number
-console.log(formatCompactNumber(1250)); // "1.2K"
-console.log(formatCompactNumber(1500000, "id-ID")); // "1,5 jt"
-
-## Format Ordinal Number
-console.log(formatOrdinalNumber(1)); // "1st"
-console.log(formatOrdinalNumber(2)); // "2nd"
-console.log(formatOrdinalNumber(3)); // "3rd"
-console.log(formatOrdinalNumber(4)); // "4th"
-
-## Format Weekday
-console.log(formatWeekday("2025-05-20")); // "Tuesday"
-console.log(formatWeekday("2025-05-20", "id-ID")); // "Selasa"
-
-## Format Month
-console.log(formatMonth("2025-05-20")); // "May"
-console.log(formatMonth("2025-05-20", "id-ID")); // "Mei"
-
-## Format ISO Date
-console.log(formatISODate(new Date())); // "2025-05-20"
-console.log(formatISODate("2025-01-01T12:00:00Z")); // "2025-01-01"
-
-## Format File Size
-console.log(formatFileSize(1024)); // "1 KB"
-console.log(formatFileSize(1048576)); // "1 MB"
-console.log(formatFileSize(1500000, "id-ID")); // "1,43 MB"
-
-## Format Day Of Year
-console.log(formatDayOfYear("2025-05-20")); // "140"
-
-## Format Time Ago
-console.log(formatTimeAgo("2025-05-20T12:00:00Z")); // "2 hours ago"
-
-## Format Time Ago Detail
-console.log(formatTimeAgoDetailed(new Date(Date.now() - 90061 * 1000))); // "1 day 1 hour ago"
-
-## Format Time Zone
-console.log(formatTimeZone("2025-05-20T10:00:00Z", "Asia/Jakarta")); // "May 20, 2025, 17:00"
-console.log(formatTimeZone("2025-05-20T10:00:00Z", "America/New_York")); // "May 20, 2025, 06:00"
-
-## Format Elapsed Time
-console.log(formatElapsedTime(45));        // "45s"
-console.log(formatElapsedTime(125));       // "2m 5s"
-console.log(formatElapsedTime(3725));      // "1h 2m 5s"
-console.log(formatElapsedTime(90061));     // "1d 1h 1m 1s"
-
-## Format Relative Duration
-console.log(formatRelativeDuration("2025-05-01", "2025-05-03"));  // "2d"
-console.log(formatRelativeDuration("2025-05-01T00:00:00", "2025-05-01T01:30:00")); // "1h 30m"
-console.log(formatRelativeDuration("2025-05-01T00:00:00", "2025-05-01T00:00:45")); // "45s"
-
-## Format Temperature
-console.log(formatTemperature(25));             // "25°C"
-console.log(formatTemperature(77, "fahrenheit")); // "77°F"
-console.log(formatTemperature(30.567));         // "30.6°C"
-console.log(formatTemperature(100, "fahrenheit", "fr-FR")); // "100 °F"
-
-
-## Format Timezone Offset
-console.log(formatTimezoneOffset()); // "UTC+07:00" (tergantung zona lokal sistem)
-console.log(formatTimezoneOffset("2025-05-20T10:00:00Z")); // "UTC+00:00"
-
-
-
-// =============================
-// Format ISO DateTime
-// =============================
-console.log(formatISODateTime("2025-02-10T14:23:45Z"));
-// "2025-02-10 14:23:45"
-
-console.log(formatISODateTime(new Date()));
-// "2025-11-18 12:45:01" (sesuai waktu sekarang)
-
-
-// =============================
-// Format Quarter
-// =============================
-console.log(formatQuarter("2025-01-15"));
-// "Q1"
-
-console.log(formatQuarter("2025-04-01"));
-// "Q2"
-
-
-// =============================
-// Format Week Number (ISO Week)
-// =============================
-console.log(formatWeekNumber("2025-01-01"));
-// contoh: 1
-
-console.log(formatWeekNumber(new Date()));
-// output sesuai minggu saat ini
-
-
-// =============================
-// Format Phone Number
-// =============================
-console.log(formatPhone("081234567890"));
-// "081-234-567890"
-
-console.log(formatPhone("+62 812-3456-7890"));
-// "062-812-34567890"
-
-
-// =============================
-// Format Boolean Yes/No
-// =============================
-console.log(formatBoolean(true));
-// "Yes"
-
-console.log(formatBoolean(false, "Iya", "Tidak"));
-// "Tidak"
-
-
-// =============================
-// Format RGB → HEX
-// =============================
-console.log(formatRgbToHex(255, 99, 71));
-// "#ff6347"
-
-console.log(formatRgbToHex(0, 0, 0));
-// "#000000"
-
-console.log(formatRgbToHex(12, 200, 150));
-// "#0cc896"
-
-
-// =============================
-// Format Capitalize
-// =============================
-console.log(formatCapitalize("hello world"));
-// "Hello world"
-
-console.log(formatCapitalize("indonesia"));
-// "Indonesia"
-
-console.log(formatCapitalize("react context"));
-// "React context"
-
-
-
-// =============================
-// Format Slug
-// =============================
-console.log(formatSlug("Hello World"));
-// "hello-world"
-
-console.log(formatSlug("  Produk Baru 2025  "));
-// "produk-baru-2025"
-
-console.log(formatSlug("A&B Special Edition"));
-// "ab-special-edition"
-
-
-
-// =============================
-// Format Two Digit Number
-// =============================
-console.log(formatTwoDigit(1));
-// "01"
-
-console.log(formatTwoDigit(9));
-// "09"
-
-console.log(formatTwoDigit(10));
-// "10"
-
-// =============================
-// Format Truncate
-// =============================
-console.log(formatTruncate("Ini adalah contoh text yang panjang", 20));
-// "Ini adalah contoh t…"
-
-console.log(formatTruncate("Pendek", 20));
-// "Pendek"
-
-
-// =============================
-// Format Title Case
-// =============================
-console.log(formatTitleCase("halo dunia dari javascript"));
-// "Halo Dunia Dari Javascript"
-
-
-// =============================
-// Format Initials
-// =============================
-console.log(formatInitials("Fajriyan Pratama"));
-// "FP"
-
-console.log(formatInitials("Fajriyan Nur Pratama", 3));
-// "FNP"
-
-
-// =============================
-// Format Mask Email
-// =============================
-console.log(formatMaskEmail("fajriyan@gmail.com"));
-// "f***n@gmail.com"
-
-
-// =============================
-// Format Mask Phone
-// =============================
-console.log(formatMaskPhone("081234567890"));
-// "********7890"
-
-console.log(formatMaskPhone("+62 812-3456-7890", 3));
-// "*********890"
-
-
-// =============================
-// Format Clamp Number
-// =============================
-console.log(formatClampNumber(5, 1, 10));
-// 5
-
-console.log(formatClampNumber(0, 1, 10));
-// 1
-
-console.log(formatClampNumber(15, 1, 10));
-// 10
-
-
-// =============================
-// Format JSON Pretty
-// =============================
-console.log(
-  formatJsonPretty({ name: "Fajriyan", age: 25 })
-);
-/*
-{
-  "name": "Fajriyan",
-  "age": 25
-}
-*/
-
-
-// =============================
-// Format File Size (SI)
-// =============================
-console.log(formatFileSizeSI(1000));
-// "1.00 KB"
-
-console.log(formatFileSizeSI(1500000));
-// "1.50 MB"
-
-
-// =============================
-// Format Date Range
-// =============================
-console.log(
-  formatDateRange("2025-01-01", "2025-01-10")
-);
-// "Jan 1, 2025 - Jan 10, 2025"
-
-
-// =============================
-// Format Age
-// =============================
-console.log(formatAge("2000-01-01"));
-// 25  (tergantung tanggal saat dijalankan)
-
-
-// =============================
-// Parse Currency
-// =============================
-console.log(parseCurrency("$1,234.56"));
-// 1234.56
-
-console.log(parseCurrency("Rp 10.500", "id-ID"));
-// 10500
-
-
-// =============================
-// Get User Timezone
-// =============================
-console.log(getUserTimezone());
-// "Asia/Jakarta" (tergantung user)
-
-
-
+} from "simple-formatter-utility";
+
+// Basic usage with default locale (en-US)
+console.log(formatDate(new Date())); // "12/25/2023"
+console.log(formatCurrency(1234.56, "USD")); // "$1,234.56"
+console.log(formatNumber(1234567.89)); // "1,234,567.89"
+console.log(formatRelativeTime(new Date(Date.now() - 3600000))); // "1 hour ago"
+
+// With custom locale
+console.log(formatDate(new Date(), "id-ID")); // "25/12/2023"
+console.log(formatCurrency(1234.56, "IDR", "id-ID")); // "Rp1.234,56"
 ```
 
-- [ ] create documentation better
+## API Reference
 
-stay tuned for updates on this package. ✨<br>
-[🛠️ Contribute](https://github.com/fajriyan/simple-formatter-utility/blob/main/CONTRIBUTING.md)
-| [💸 Support Me](https://saweria.co/fajriyan)
+### Date & Time Formatting
 
-<!-- // "name": "@fajriyan/simple-formatter-utility", -->
+#### `formatDate(date, locale?, options?)`
+
+Formats a date using Intl.DateTimeFormat.
+
+```typescript
+formatDate(new Date(), "en-US"); // "12/25/2023"
+formatDate("2023-12-25", "id-ID"); // "25/12/2023"
+```
+
+#### `formatTime(date, locale?, options?)`
+
+Formats time only.
+
+```typescript
+formatTime(new Date(), "en-US"); // "2:30 PM"
+formatTime("2023-12-25T14:30:00", "id-ID"); // "14.30"
+```
+
+#### `formatDateTime(date, locale?, options?)`
+
+Formats date and time together.
+
+```typescript
+formatDateTime(new Date()); // "December 25, 2023 at 2:30:00 PM"
+```
+
+#### `formatISODate(date)`
+
+Returns date in YYYY-MM-DD format.
+
+```typescript
+formatISODate(new Date()); // "2023-12-25"
+```
+
+#### `formatISODateTime(date)`
+
+Returns datetime in YYYY-MM-DD HH:MM:SS format.
+
+```typescript
+formatISODateTime(new Date()); // "2023-12-25 14:30:00"
+```
+
+#### `formatWeekday(date, locale?, format?)`
+
+Returns the weekday name.
+
+```typescript
+formatWeekday("2023-12-25"); // "Monday"
+formatWeekday("2023-12-25", "id-ID"); // "Senin"
+```
+
+#### `formatMonth(date, locale?, format?)`
+
+Returns the month name.
+
+```typescript
+formatMonth("2023-12-25"); // "December"
+formatMonth("2023-12-25", "id-ID"); // "Desember"
+```
+
+#### `formatQuarter(date)`
+
+Returns quarter (Q1, Q2, Q3, Q4).
+
+```typescript
+formatQuarter("2023-12-25"); // "Q4"
+```
+
+#### `formatWeekNumber(date)`
+
+Returns ISO week number.
+
+```typescript
+formatWeekNumber("2023-12-25"); // 52
+```
+
+#### `formatDayOfYear(date)`
+
+Returns day of year (1-366).
+
+```typescript
+formatDayOfYear("2023-12-25"); // 359
+```
+
+### Relative Time & Duration
+
+#### `formatRelativeTime(date, baseDate?, locale?)`
+
+Formats relative time like "2 hours ago".
+
+```typescript
+formatRelativeTime(new Date(Date.now() - 3600000)); // "1 hour ago"
+formatRelativeTime(new Date(Date.now() + 86400000)); // "in 1 day"
+```
+
+#### `formatTimeAgo(date, locale?)`
+
+Similar to formatRelativeTime, optimized for past dates.
+
+```typescript
+formatTimeAgo("2023-12-24T14:30:00Z"); // "1 day ago"
+```
+
+#### `formatTimeAgoDetailed(date, locale?)`
+
+Detailed time ago with multiple units.
+
+```typescript
+formatTimeAgoDetailed(new Date(Date.now() - 90000000)); // "1 day 1 hour ago"
+```
+
+#### `formatDuration(seconds)`
+
+Formats seconds into HH:MM:SS.
+
+```typescript
+formatDuration(3661); // "01:01:01"
+```
+
+#### `formatElapsedTime(seconds)`
+
+Formats seconds into human-readable duration.
+
+```typescript
+formatElapsedTime(3661); // "1h 1m 1s"
+```
+
+#### `formatRelativeDuration(start, end)`
+
+Calculates and formats duration between two dates.
+
+```typescript
+formatRelativeDuration("2023-12-24", "2023-12-25"); // "1d"
+```
+
+### Numbers & Currency
+
+#### `formatNumber(number, locale?, options?)`
+
+Formats numbers with locale-specific separators.
+
+```typescript
+formatNumber(1234567.89, "en-US"); // "1,234,567.89"
+formatNumber(1234567.89, "id-ID"); // "1.234.567,89"
+```
+
+#### `formatCurrency(amount, currency?, locale?)`
+
+Formats currency amounts.
+
+```typescript
+formatCurrency(1234.56, "USD", "en-US"); // "$1,234.56"
+formatCurrency(1234.56, "IDR", "id-ID"); // "Rp1.234,56"
+```
+
+#### `formatPercent(value, locale?)`
+
+Formats percentages.
+
+```typescript
+formatPercent(0.85, "en-US"); // "85%"
+formatPercent(0.85, "id-ID"); // "85%"
+```
+
+#### `formatCompactNumber(number, locale?, options?)`
+
+Formats numbers in compact notation (1.2K, 1.5M).
+
+```typescript
+formatCompactNumber(1250); // "1.3K"
+formatCompactNumber(1500000, "id-ID"); // "1,5 jt"
+```
+
+#### `formatOrdinalNumber(number, locale?)`
+
+Adds ordinal suffixes (1st, 2nd, 3rd).
+
+```typescript
+formatOrdinalNumber(1); // "1st"
+formatOrdinalNumber(22); // "22nd"
+```
+
+### File Sizes & Units
+
+#### `formatFileSize(bytes, locale?)`
+
+Formats bytes into human-readable file sizes.
+
+```typescript
+formatFileSize(1024); // "1 KB"
+formatFileSize(1048576); // "1 MB"
+```
+
+#### `formatFileSizeSI(bytes)`
+
+Formats using SI units (1000-based).
+
+```typescript
+formatFileSizeSI(1000); // "1.00 KB"
+```
+
+#### `formatTemperature(value, unit?, locale?)`
+
+Formats temperature with units.
+
+```typescript
+formatTemperature(25); // "25°C"
+formatTemperature(77, "fahrenheit"); // "77°F"
+```
+
+### Time Zones
+
+#### `formatTimeZone(date, timeZone, locale?, options?)`
+
+Formats date in specific time zone.
+
+```typescript
+formatTimeZone("2023-12-25T10:00:00Z", "Asia/Jakarta"); // "Dec 25, 2023, 17:00"
+```
+
+#### `formatTimezoneOffset(date?)`
+
+Returns timezone offset (UTC+X:XX).
+
+```typescript
+formatTimezoneOffset(); // "UTC+07:00"
+```
+
+#### `getUserTimezone()`
+
+Returns user's current timezone.
+
+```typescript
+getUserTimezone(); // "Asia/Jakarta"
+```
+
+#### `convertTimezone(date, timeZone)`
+
+Converts date to different timezone.
+
+```typescript
+convertTimezone(new Date(), "America/New_York");
+```
+
+### Text & Utility Formatting
+
+#### `formatPhone(phone)`
+
+Basic phone number formatting.
+
+```typescript
+formatPhone("081234567890"); // "081-234-567890"
+```
+
+#### `formatBoolean(value, yes?, no?)`
+
+Formats boolean to text.
+
+```typescript
+formatBoolean(true); // "Yes"
+formatBoolean(false, "Ya", "Tidak"); // "Tidak"
+```
+
+#### `formatRgbToHex(r, g, b)`
+
+Converts RGB to hex color.
+
+```typescript
+formatRgbToHex(255, 0, 0); // "#FF0000"
+```
+
+#### `formatCapitalize(text)`
+
+Capitalizes first letter.
+
+```typescript
+formatCapitalize("hello world"); // "Hello world"
+```
+
+#### `formatTitleCase(text)`
+
+Converts to title case.
+
+```typescript
+formatTitleCase("hello world"); // "Hello World"
+```
+
+#### `formatSlug(text)`
+
+Creates URL-friendly slug.
+
+```typescript
+formatSlug("Hello World!"); // "hello-world"
+```
+
+#### `formatTruncate(text, maxLength?, suffix?)`
+
+Truncates text with suffix.
+
+```typescript
+formatTruncate("This is a long text", 10); // "This is a …"
+```
+
+#### `formatInitials(name, max?)`
+
+Extracts initials from name.
+
+```typescript
+formatInitials("John Doe Smith"); // "JD"
+```
+
+#### `formatMaskEmail(email)`
+
+Masks email for privacy.
+
+```typescript
+formatMaskEmail("john.doe@example.com"); // "j***e@example.com"
+```
+
+#### `formatMaskPhone(phone, visible?)`
+
+Masks phone number.
+
+```typescript
+formatMaskPhone("081234567890", 4); // "****67890"
+```
+
+#### `formatJsonPretty(value, space?)`
+
+Pretty-prints JSON.
+
+```typescript
+formatJsonPretty({ name: "John", age: 30 }, 2);
+```
+
+### Date Ranges & Calculations
+
+#### `formatDateRange(start, end, locale?)`
+
+Formats date range.
+
+```typescript
+formatDateRange("2023-12-24", "2023-12-25"); // "Dec 24, 2023 - Dec 25, 2023"
+```
+
+#### `formatAge(birthDate)`
+
+Calculates age from birth date.
+
+```typescript
+formatAge("1990-12-25"); // 33 (depending on current date)
+```
+
+### Parsing Functions
+
+#### `parseCurrency(value, locale?)`
+
+Parses formatted currency string to number.
+
+```typescript
+parseCurrency("$1,234.56"); // 1234.56
+```
+
+#### `parseNumber(value)`
+
+Parses formatted number string to number.
+
+```typescript
+parseNumber("1,234.56"); // 1234.56
+```
+
+#### `parseBoolean(value)`
+
+Parses various formats to boolean.
+
+```typescript
+parseBoolean("true"); // true
+parseBoolean("1"); // true
+```
+
+### Utility Functions
+
+#### `formatTwoDigit(number)`
+
+Pads number with leading zero.
+
+```typescript
+formatTwoDigit(5); // "05"
+```
+
+#### `formatClampNumber(value, min, max)`
+
+Clamps number within range.
+
+```typescript
+formatClampNumber(15, 0, 10); // 10
+```
+
+## Examples
+
+### Multi-language Support
+
+```typescript
+import {
+  formatCurrency,
+  formatDate,
+  formatNumber,
+} from "simple-formatter-utility";
+
+const amount = 1234567.89;
+const date = new Date();
+
+console.log("English:", formatCurrency(amount, "USD", "en-US")); // "$1,234,567.89"
+console.log("Indonesian:", formatCurrency(amount, "IDR", "id-ID")); // "Rp1.234.567,89"
+console.log("German:", formatCurrency(amount, "EUR", "de-DE")); // "1.234.567,89 €"
+
+console.log("English date:", formatDate(date, "en-US")); // "12/25/2023"
+console.log("Indonesian date:", formatDate(date, "id-ID")); // "25/12/2023"
+console.log("Japanese date:", formatDate(date, "ja-JP")); // "2023/12/25"
+```
+
+### Building a User Profile Display
+
+```typescript
+import {
+  formatDate,
+  formatAge,
+  formatInitials,
+  formatMaskEmail,
+  formatCapitalize,
+} from "simple-formatter-utility";
+
+const user = {
+  firstName: "john",
+  lastName: "doe",
+  email: "john.doe@example.com",
+  birthDate: "1990-05-15",
+  joinDate: "2020-03-10",
+};
+
+console.log(`Welcome ${formatInitials(`${user.firstName} ${user.lastName}`)}!`);
+console.log(
+  `Name: ${formatCapitalize(user.firstName)} ${formatCapitalize(user.lastName)}`,
+);
+console.log(`Age: ${formatAge(user.birthDate)}`);
+console.log(`Email: ${formatMaskEmail(user.email)}`);
+console.log(
+  `Member since: ${formatDate(user.joinDate, "en-US", { year: "numeric", month: "long" })}`,
+);
+```
+
+### File Upload Progress
+
+```typescript
+import { formatFileSize, formatElapsedTime } from "simple-formatter-utility";
+
+function displayUploadProgress(
+  uploadedBytes: number,
+  totalBytes: number,
+  elapsedSeconds: number,
+) {
+  const percentage = ((uploadedBytes / totalBytes) * 100).toFixed(1);
+  const speed = uploadedBytes / elapsedSeconds;
+
+  console.log(
+    `Uploaded: ${formatFileSize(uploadedBytes)} / ${formatFileSize(totalBytes)} (${percentage}%)`,
+  );
+  console.log(`Time elapsed: ${formatElapsedTime(elapsedSeconds)}`);
+  console.log(`Speed: ${formatFileSize(speed)}/s`);
+}
+```
+
+## Browser Support
+
+This library uses the native
+[Intl API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)
+which is supported in all modern browsers:
+
+- Chrome 24+
+- Firefox 29+
+- Safari 10+
+- Edge 12+
+
+For older browsers, consider using a polyfill like
+[intl-polyfill](https://github.com/andyearnshaw/Intl.js).
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major
+changes, please open an issue first to discuss what you would like to change.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
+for details.
+
+## Repository
+
+[https://github.com/fajriyan/simple-formatter-utility](https://github.com/fajriyan/simple-formatter-utility)
+
+---
+
+Thanks!
