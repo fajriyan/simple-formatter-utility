@@ -546,6 +546,25 @@ which is supported in all modern browsers:
 For older browsers, consider using a polyfill like
 [intl-polyfill](https://github.com/andyearnshaw/Intl.js).
 
+## What's Next
+
+Potential next features for this utility library:
+
+1. `createFormatter()` factory for setting default `locale`, `timeZone`, and
+   `currency` once
+2. More robust locale-aware parsing for `parseCurrency()` and `parseNumber()`
+3. Safer helpers like `isValidDate()`, `safeParseDate()`, and
+   `safeFormatDate()`
+4. Native `formatDateRange()` support using `Intl.DateTimeFormat.formatRange()`
+5. Expanded timezone utilities like `listAvailableTimeZones()` and
+   `getTimezoneOffsetString()`
+6. Configurable duration formatting for short, long, and compact output
+7. Better international support for ordinals, phone formatting, and slug
+   transliteration
+8. Batch formatting helpers for arrays of dates, numbers, and currencies
+
+Pick one of these and I can help implement it next.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major
