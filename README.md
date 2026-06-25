@@ -171,20 +171,23 @@ Detailed time ago with multiple units.
 formatTimeAgoDetailed(new Date(Date.now() - 90000000)); // "1 day 1 hour ago"
 ```
 
-#### `formatDuration(seconds)`
+#### `formatDuration(seconds, options?)`
 
-Formats seconds into HH:MM:SS.
+Formats seconds with configurable duration output.
 
 ```typescript
 formatDuration(3661); // "01:01:01"
+formatDuration(3661, { style: "compact" }); // "1h 1m 1s"
+formatDuration(3661, { style: "long" }); // "1 hour 1 minute 1 second"
 ```
 
-#### `formatElapsedTime(seconds)`
+#### `formatElapsedTime(seconds, options?)`
 
 Formats seconds into human-readable duration.
 
 ```typescript
 formatElapsedTime(3661); // "1h 1m 1s"
+formatElapsedTime(3661, { style: "long" }); // "1 hour 1 minute 1 second"
 ```
 
 #### `formatRelativeDuration(start, end)`
@@ -288,12 +291,29 @@ Returns timezone offset (UTC+X:XX).
 formatTimezoneOffset(); // "UTC+07:00"
 ```
 
+#### `getTimezoneOffsetString(date?, timeZone?)`
+
+Returns timezone offset for the current timezone or a specific timezone.
+
+```typescript
+getTimezoneOffsetString(); // "UTC+07:00"
+getTimezoneOffsetString(new Date(), "America/New_York"); // "UTC-04:00"
+```
+
 #### `getUserTimezone()`
 
 Returns user's current timezone.
 
 ```typescript
 getUserTimezone(); // "Asia/Jakarta"
+```
+
+#### `listAvailableTimeZones()`
+
+Returns supported IANA time zone identifiers.
+
+```typescript
+listAvailableTimeZones(); // ["Africa/Abidjan", "Africa/Accra", ...]
 ```
 
 #### `convertTimezone(date, timeZone)`
@@ -555,13 +575,9 @@ Potential next features for this utility library:
 2. More robust locale-aware parsing for `parseCurrency()` and `parseNumber()`
 3. Safer helpers like `isValidDate()`, `safeParseDate()`, and
    `safeFormatDate()`
-4. Native `formatDateRange()` support using `Intl.DateTimeFormat.formatRange()`
-5. Expanded timezone utilities like `listAvailableTimeZones()` and
-   `getTimezoneOffsetString()`
-6. Configurable duration formatting for short, long, and compact output
-7. Better international support for ordinals, phone formatting, and slug
+4. Better international support for ordinals, phone formatting, and slug
    transliteration
-8. Batch formatting helpers for arrays of dates, numbers, and currencies
+5. Batch formatting helpers for arrays of dates, numbers, and currencies
 
 Pick one of these and I can help implement it next.
 

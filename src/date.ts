@@ -5,8 +5,66 @@ const MS_PER_DAY = 24 * MS_PER_HOUR;
 const MS_PER_MONTH = 30 * MS_PER_DAY;
 const MS_PER_YEAR = 365 * MS_PER_DAY;
 
+type DurationFormatStyle = "short" | "compact" | "long";
+
+interface DurationFormatOptions {
+  style?: DurationFormatStyle;
+}
+
 function toDate(value: Date | string) {
   return new Date(value);
+}
+
+function normalizeDurationSeconds(seconds: number) {
+  const totalSeconds = Math.floor(Math.abs(seconds));
+  return {
+    isNegative: seconds < 0,
+    totalSeconds,
+  };
+}
+
+function formatShortDuration(totalSeconds: number) {
+  const hours = Math.floor(totalSeconds / 3600)
+    .toString()
+    .padStart(2, "0");
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+    .toString()
+    .padStart(2, "0");
+  const seconds = Math.floor(totalSeconds % 60)
+    .toString()
+    .padStart(2, "0");
+
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+function formatCompactDuration(totalSeconds: number) {
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+
+  const parts: string[] = [];
+  if (days) parts.push(`${days}d`);
+  if (hours) parts.push(`${hours}h`);
+  if (minutes) parts.push(`${minutes}m`);
+  if (seconds || parts.length === 0) parts.push(`${seconds}s`);
+  return parts.join(" ");
+}
+
+function formatLongDuration(totalSeconds: number) {
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+
+  const parts: string[] = [];
+  if (days) parts.push(`${days} day${days === 1 ? "" : "s"}`);
+  if (hours) parts.push(`${hours} hour${hours === 1 ? "" : "s"}`);
+  if (minutes) parts.push(`${minutes} minute${minutes === 1 ? "" : "s"}`);
+  if (seconds || parts.length === 0) {
+    parts.push(`${seconds} second${seconds === 1 ? "" : "s"}`);
+  }
+  return parts.join(" ");
 }
 
 export function formatDate(
@@ -40,18 +98,23 @@ export function formatTime(
   return new Intl.DateTimeFormat(locale, options).format(toDate(date));
 }
 
-export function formatDuration(seconds: number) {
-  const hrs = Math.floor(seconds / 3600)
-    .toString()
-    .padStart(2, "0");
-  const mins = Math.floor((seconds % 3600) / 60)
-    .toString()
-    .padStart(2, "0");
-  const secs = Math.floor(seconds % 60)
-    .toString()
-    .padStart(2, "0");
+export function formatDuration(
+  seconds: number,
+  options: DurationFormatOptions = {},
+) {
+  const { isNegative, totalSeconds } = normalizeDurationSeconds(seconds);
+  const style = options.style ?? "short";
+  const prefix = isNegative && totalSeconds > 0 ? "-" : "";
 
-  return `${hrs}:${mins}:${secs}`;
+  if (style === "compact") {
+    return prefix + formatCompactDuration(totalSeconds);
+  }
+
+  if (style === "long") {
+    return prefix + formatLongDuration(totalSeconds);
+  }
+
+  return prefix + formatShortDuration(totalSeconds);
 }
 
 export function formatRelativeTime(
@@ -183,18 +246,13 @@ export function formatTimeAgoDetailed(date: Date | string, locale = "en-US") {
   return parts.join(" ") + " ago";
 }
 
-export function formatElapsedTime(seconds: number) {
-  const days = Math.floor(seconds / 86400);
-  const hours = Math.floor((seconds % 86400) / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const secs = seconds % 60;
-
-  const parts: string[] = [];
-  if (days) parts.push(`${days}d`);
-  if (hours) parts.push(`${hours}h`);
-  if (minutes) parts.push(`${minutes}m`);
-  if (secs || parts.length === 0) parts.push(`${secs}s`);
-  return parts.join(" ");
+export function formatElapsedTime(
+  seconds: number,
+  options: DurationFormatOptions = {},
+) {
+  return formatDuration(seconds, {
+    style: options.style ?? "compact",
+  });
 }
 
 export function formatRelativeDuration(
