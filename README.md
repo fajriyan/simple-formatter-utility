@@ -552,6 +552,137 @@ function displayUploadProgress(
 }
 ```
 
+## formatDuration()
+
+Formats a duration in seconds into a human-readable string.
+
+### Import
+
+```typescript
+import { formatDuration } from "simple-formatter-utility";
+```
+
+### Basic Usage
+
+```typescript
+formatDuration(45);
+// "45sec"
+
+formatDuration(90);
+// "1min 30sec"
+
+formatDuration(3661);
+// "1hr 1min 1sec"
+```
+
+### Styles
+
+#### Short (default)
+
+```typescript
+formatDuration(93784);
+// "1d 2hr 3min 4sec"
+```
+
+#### Compact
+
+```typescript
+formatDuration(93784, {
+  style: "compact",
+});
+// "1d 2h 3m 4s"
+```
+
+#### Long
+
+```typescript
+formatDuration(93784, {
+  style: "long",
+});
+// "1 day, 2 hours, 3 minutes, 4 seconds"
+```
+
+#### Clock
+
+```typescript
+formatDuration(3661, {
+  style: "clock",
+});
+// "1:01:01"
+
+formatDuration(93784, {
+  style: "clock",
+});
+// "1:02:03:04"
+```
+
+#### Human
+
+```typescript
+formatDuration(45, {
+  style: "human",
+});
+// "45 seconds ago"
+
+formatDuration(7200, {
+  style: "human",
+});
+// "2 hours ago"
+```
+
+---
+
+## Building a Video Player
+
+```typescript
+import { formatDuration } from "simple-formatter-utility";
+
+const video = {
+  title: "Introduction to TypeScript",
+  currentTime: 125,
+  duration: 3725,
+};
+
+console.log(video.title);
+
+console.log(
+  `${formatDuration(video.currentTime, {
+    style: "clock",
+  })} / ${formatDuration(video.duration, {
+    style: "clock",
+  })}`,
+);
+
+// Output:
+// 2:05 / 1:02:05
+```
+
+---
+
+## Building a Download Progress
+
+```typescript
+import { formatDuration } from "simple-formatter-utility";
+
+const estimatedTime = 523;
+
+console.log(
+  `Estimated time remaining: ${formatDuration(estimatedTime, {
+    style: "compact",
+  })}`,
+);
+
+// Estimated time remaining: 8m 43s
+```
+
+---
+
+## API
+
+| Option | Type                                                           | Default   | Description  |
+| ------ | -------------------------------------------------------------- | --------- | ------------ |
+| style  | `"short"` \| `"compact"` \| `"long"` \| `"clock"` \| `"human"` | `"short"` | Output style |
+
 ## Browser Support
 
 This library uses the native
@@ -573,8 +704,7 @@ Potential next features for this utility library:
 1. `createFormatter()` factory for setting default `locale`, `timeZone`, and
    `currency` once
 2. More robust locale-aware parsing for `parseCurrency()` and `parseNumber()`
-3. Safer helpers like `isValidDate()`, `safeParseDate()`, and
-   `safeFormatDate()`
+3. Safer helpers like `isValidDate()`, `safeParseDate()`, and `safeFormatDate()`
 4. Better international support for ordinals, phone formatting, and slug
    transliteration
 5. Batch formatting helpers for arrays of dates, numbers, and currencies
