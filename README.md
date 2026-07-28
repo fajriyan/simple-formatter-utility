@@ -1,9 +1,6 @@
-# I18n Formatter Utility
+# Simple Formatter Utility
 
-A comprehensive TypeScript utility library for internationalization (i18n)
-formatting using the native Intl API. This package provides easy-to-use
-functions for formatting dates, numbers, currencies, and more with full locale
-support.
+A comprehensive TypeScript utility library for internationalization (i18n) formatting using the native Intl API. This package provides easy-to-use functions for formatting dates, numbers, currencies, and more with full locale support.
 
 [![npm version](https://img.shields.io/npm/v/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
 [![npm downloads](https://img.shields.io/npm/dm/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
@@ -11,50 +8,7 @@ support.
 [![license](https://img.shields.io/npm/l/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
 [![bundlephobia](https://img.shields.io/bundlephobia/minzip/simple-formatter-utility)](https://bundlephobia.com/result?p=simple-formatter-utility)
 [![GitHub issues](https://img.shields.io/github/issues/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/issues)
-[![GitHub last commit](https://img.shields.io/github/last-commit/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/commits)
-
-## Features
-
-- 🌍 **Full Locale Support**: Uses native Intl API for accurate locale-specific
-  formatting
-- 📅 **Date & Time Formatting**: Comprehensive date, time, and datetime
-  formatting
-- 💰 **Currency & Numbers**: Format currencies, percentages, and numbers with
-  locale awareness
-- 📏 **File Sizes & Units**: Human-readable file sizes and temperature
-  formatting
-- ⏱️ **Relative Time**: "2 hours ago", "in 3 days" style formatting
-- 🔧 **Utility Functions**: Phone masking, email masking, text formatting, and
-  more
-- 📦 **Zero Dependencies**: Built on native browser APIs
-- 🏷️ **TypeScript Support**: Full type definitions included
-
-## Installation
-
-```bash
-npm install simple-formatter-utility
-```
-
-## Quick Start
-
-```typescript
-import {
-  formatDate,
-  formatCurrency,
-  formatNumber,
-  formatRelativeTime,
-} from "simple-formatter-utility";
-
-// Basic usage with default locale (en-US)
-console.log(formatDate(new Date())); // "12/25/2023"
-console.log(formatCurrency(1234.56, "USD")); // "$1,234.56"
-console.log(formatNumber(1234567.89)); // "1,234,567.89"
-console.log(formatRelativeTime(new Date(Date.now() - 3600000))); // "1 hour ago"
-
-// With custom locale
-console.log(formatDate(new Date(), "id-ID")); // "25/12/2023"
-console.log(formatCurrency(1234.56, "IDR", "id-ID")); // "Rp1.234,56"
-```
+[![GitHub last commit](https://img.shields.io/github/last-commit/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/commits)\n\n## Features\n\n- 🌍 **Full Locale Support**: Uses native Intl API for accurate locale-specific\n  formatting\n- 📅 **Date & Time Formatting**: Comprehensive date, time, and datetime\n  formatting\n- 💰 **Currency & Numbers**: Format currencies, percentages, and numbers with\n  locale awareness\n- 📏 **File Sizes & Units**: Human-readable file sizes and temperature\n  formatting\n- ⏱️ **Relative Time**: \"2 hours ago\", \"in 3 days\" style formatting\n- 🔧 **Utility Functions**: Phone masking, email masking, text formatting, and\n  more\n- 📦 **Zero Dependencies**: Built on native browser APIs\n- 🏷️ **TypeScript Support**: Full type definitions included\n\n## Installation\n\n```bash\nnpm install simple-formatter-utility\n```\n\n## Quick Start\n\n```typescript\nimport {\n   formatDate,\n   formatCurrency,\n   formatNumber,\n   formatRelativeTime,\n} from \"simple-formatter-utility\";\n\n// Basic usage with default locale (en-US)\nconsole.log(formatDate(new Date())); // \"12/25/2023\"\nconsole.log(formatCurrency(1234.56, \"USD\")); // \"$1,234.56\"\nconsole.log(formatNumber(1234567.89)); // \"1,234,567.89\"\nconsole.log(formatRelativeTime(new Date(Date.now() - 3600000))); // \"1 hour ago\"\n\n// With custom locale\nconsole.log(formatDate(new Date(), \"id-ID\")); // \"25/12/2023\"\nconsole.log(formatCurrency(1234.56, \"IDR\", \"id-ID\")); // \"Rp1.234,56\"\n```
 
 ## API Reference
 
@@ -484,9 +438,9 @@ formatClampNumber(15, 0, 10); // 10
 
 ```typescript
 import {
-  formatCurrency,
-  formatDate,
-  formatNumber,
+   formatCurrency,
+   formatDate,
+   formatNumber,
 } from "simple-formatter-utility";
 
 const amount = 1234567.89;
@@ -505,29 +459,29 @@ console.log("Japanese date:", formatDate(date, "ja-JP")); // "2023/12/25"
 
 ```typescript
 import {
-  formatDate,
-  formatAge,
-  formatInitials,
-  formatMaskEmail,
-  formatCapitalize,
+   formatDate,
+   formatAge,
+   formatInitials,
+   formatMaskEmail,
+   formatCapitalize,
 } from "simple-formatter-utility";
 
 const user = {
-  firstName: "john",
-  lastName: "doe",
-  email: "john.doe@example.com",
-  birthDate: "1990-05-15",
-  joinDate: "2020-03-10",
+   firstName: "john",
+   lastName: "doe",
+   email: "john.doe@example.com",
+   birthDate: "1990-05-15",
+   joinDate: "2020-03-10",
 };
 
 console.log(`Welcome ${formatInitials(`${user.firstName} ${user.lastName}`)}!`);
 console.log(
-  `Name: ${formatCapitalize(user.firstName)} ${formatCapitalize(user.lastName)}`,
+   `Name: ${formatCapitalize(user.firstName)} ${formatCapitalize(user.lastName)}`,
 );
 console.log(`Age: ${formatAge(user.birthDate)}`);
 console.log(`Email: ${formatMaskEmail(user.email)}`);
 console.log(
-  `Member since: ${formatDate(user.joinDate, "en-US", { year: "numeric", month: "long" })}`,
+   `Member since: ${formatDate(user.joinDate, "en-US", { year: "numeric", month: "long" })}`,
 );
 ```
 
@@ -537,18 +491,18 @@ console.log(
 import { formatFileSize, formatElapsedTime } from "simple-formatter-utility";
 
 function displayUploadProgress(
-  uploadedBytes: number,
-  totalBytes: number,
-  elapsedSeconds: number,
+   uploadedBytes: number,
+   totalBytes: number,
+   elapsedSeconds: number,
 ) {
-  const percentage = ((uploadedBytes / totalBytes) * 100).toFixed(1);
-  const speed = uploadedBytes / elapsedSeconds;
+   const percentage = ((uploadedBytes / totalBytes) * 100).toFixed(1);
+   const speed = uploadedBytes / elapsedSeconds;
 
-  console.log(
-    `Uploaded: ${formatFileSize(uploadedBytes)} / ${formatFileSize(totalBytes)} (${percentage}%)`,
-  );
-  console.log(`Time elapsed: ${formatElapsedTime(elapsedSeconds)}`);
-  console.log(`Speed: ${formatFileSize(speed)}/s`);
+   console.log(
+      `Uploaded: ${formatFileSize(uploadedBytes)} / ${formatFileSize(totalBytes)} (${percentage}%)`,
+   );
+   console.log(`Time elapsed: ${formatElapsedTime(elapsedSeconds)}`);
+   console.log(`Speed: ${formatFileSize(speed)}/s`);
 }
 ```
 
@@ -588,7 +542,7 @@ formatDuration(93784);
 
 ```typescript
 formatDuration(93784, {
-  style: "compact",
+   style: "compact",
 });
 // "1d 2h 3m 4s"
 ```
@@ -597,7 +551,7 @@ formatDuration(93784, {
 
 ```typescript
 formatDuration(93784, {
-  style: "long",
+   style: "long",
 });
 // "1 day, 2 hours, 3 minutes, 4 seconds"
 ```
@@ -606,12 +560,12 @@ formatDuration(93784, {
 
 ```typescript
 formatDuration(3661, {
-  style: "clock",
+   style: "clock",
 });
 // "1:01:01"
 
 formatDuration(93784, {
-  style: "clock",
+   style: "clock",
 });
 // "1:02:03:04"
 ```
@@ -620,12 +574,12 @@ formatDuration(93784, {
 
 ```typescript
 formatDuration(45, {
-  style: "human",
+   style: "human",
 });
 // "45 seconds ago"
 
 formatDuration(7200, {
-  style: "human",
+   style: "human",
 });
 // "2 hours ago"
 ```
@@ -638,19 +592,19 @@ formatDuration(7200, {
 import { formatDuration } from "simple-formatter-utility";
 
 const video = {
-  title: "Introduction to TypeScript",
-  currentTime: 125,
-  duration: 3725,
+   title: "Introduction to TypeScript",
+   currentTime: 125,
+   duration: 3725,
 };
 
 console.log(video.title);
 
 console.log(
-  `${formatDuration(video.currentTime, {
-    style: "clock",
-  })} / ${formatDuration(video.duration, {
-    style: "clock",
-  })}`,
+   `${formatDuration(video.currentTime, {
+      style: "clock",
+   })} / ${formatDuration(video.duration, {
+      style: "clock",
+   })}`,
 );
 
 // Output:
@@ -667,9 +621,9 @@ import { formatDuration } from "simple-formatter-utility";
 const estimatedTime = 523;
 
 console.log(
-  `Estimated time remaining: ${formatDuration(estimatedTime, {
-    style: "compact",
-  })}`,
+   `Estimated time remaining: ${formatDuration(estimatedTime, {
+      style: "compact",
+   })}`,
 );
 
 // Estimated time remaining: 8m 43s
