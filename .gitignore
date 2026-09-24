@@ -68,4 +68,4 @@ yarn.lock
 # Error logs
 *.stack
 debug.log
-plan.md
+docs
