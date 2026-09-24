@@ -1,3 +1,5 @@
+import { toDate } from "./utils/date";
+
 const MS_PER_SECOND = 1000;
 const MS_PER_MINUTE = 60 * MS_PER_SECOND;
 const MS_PER_HOUR = 60 * MS_PER_MINUTE;
@@ -9,10 +11,6 @@ type DurationFormatStyle = "short" | "compact" | "long";
 
 interface DurationFormatOptions {
   style?: DurationFormatStyle;
-}
-
-function toDate(value: Date | string) {
-  return new Date(value);
 }
 
 function normalizeDurationSeconds(seconds: number) {

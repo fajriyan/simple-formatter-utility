@@ -1,7 +1,3 @@
-function toDate(value: Date | string) {
-  return new Date(value);
-}
-
 export function formatNumber(
   number: number,
   locale = "en-US",

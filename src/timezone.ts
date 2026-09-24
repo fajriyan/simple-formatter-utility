@@ -1,6 +1,4 @@
-function toDate(value: Date | string) {
-  return new Date(value);
-}
+import { toDate } from "./utils/date";
 
 function getTimeZoneOffsetMinutes(date: Date, timeZone: string) {
   const formatter = new Intl.DateTimeFormat("en-US", {

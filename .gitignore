@@ -1,2 +1,71 @@
-/dist
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+yarn.lock
+
+# Log files
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build artifacts
+*.min.js
+*.bundle.js
+
+# Documentation
+*.md.html
+
+# Version control
+.git/
+.gitignore
+
+# Package manager locks
+pnpm-lock.yaml
+bun.lockb
+
+# Temporary directories
+tmp/
+
+temp/
+
+# Editor backup files
+*~
+
+# Log files
+*.log
+
+# npm package lock
+package-lock.json
+
+# Yarn lock
+yarn.lock
+
+# Error logs
+*.stack
+debug.log
+plan.md
