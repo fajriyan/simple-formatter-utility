@@ -68,4 +68,6 @@ yarn.lock
 # Error logs
 *.stack
 debug.log
-docs
+docs/*
+!docs/index.html
+!docs/.nojekyll
