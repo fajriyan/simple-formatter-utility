@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>simple-formatter-utility — live playground</title>
+<meta name="description" content="Interactive, locale-aware playground for simple-formatter-utility. Try all 46 formatters live in your browser.">
+<style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --panel2:#1c2129; --line:#2a323d;
+  --fg:#e6edf3; --dim:#8b949e; --acc:#4c9aff; --acc2:#2f6feb;
+  --err:#f85149; --code:#79c0ff;
+}
+html[data-theme=light]{
+  --bg:#f6f8fa; --panel:#fff; --panel2:#f0f3f6; --line:#d6dde5;
+  --fg:#1f2328; --dim:#5b6772; --acc:#0969da; --acc2:#0969da;
+  --err:#cf222e; --code:#0a3069;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:15px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+code,pre,input,select{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+
+header{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;max-width:1180px;margin:0 auto;padding:11px 18px}
+.brand{font-weight:700;font-size:16px;letter-spacing:-.2px;white-space:nowrap}
+.brand span{color:var(--dim);font-weight:400}
+.sp{flex:1}
+.g{display:flex;gap:7px;align-items:center}
+.lab{color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+
+input,select,button{background:var(--panel2);color:var(--fg);border:1px solid var(--line);
+  border-radius:7px;padding:6px 8px;font-size:13px;outline:none}
+input:focus,select:focus{border-color:var(--acc)}
+input[type=checkbox]{width:15px;height:15px;accent-color:var(--acc);padding:0;cursor:pointer;flex:none}
+button{cursor:pointer;white-space:nowrap}
+button:hover{border-color:var(--acc)}
+#q{min-width:200px;flex:1;max-width:300px}
+#theme{width:34px;padding:6px 0;text-align:center}
+
+main{max-width:1180px;margin:0 auto;padding:24px 18px 40px}
+.lede{color:var(--dim);margin:0 0 14px;max-width:74ch}
+.lede b{color:var(--fg)}
+.badges{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 6px}
+.badge{font-size:12px;padding:3px 9px;border-radius:99px;
+  background:var(--panel2);border:1px solid var(--line);color:var(--dim)}
+.badge b{color:var(--fg)}
+
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.9px;color:var(--dim);
+  margin:32px 0 11px;display:flex;align-items:center;gap:10px}
+h2:after{content:"";flex:1;height:1px;background:var(--line)}
+h2 .n{color:var(--acc)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(348px,1fr));gap:12px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px;min-width:0}
+.card.hit{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc2)}
+.fn{font-size:15px;font-weight:650;color:var(--code);word-break:break-all}
+.sig{font-size:11px;color:var(--dim);margin:2px 0 8px;word-break:break-all}
+.desc{font-size:12.5px;color:var(--dim);margin:0 0 10px}
+.row{display:flex;gap:8px;align-items:center;margin:0 0 6px}
+.row>label{width:66px;flex:none;font-size:12px;color:var(--dim)}
+.row>input:not([type=checkbox]),.row>select{flex:1;min-width:100px}
+.row.chk>label{width:auto;color:var(--fg);font-size:12.5px;display:flex;align-items:center;gap:6px}
+
+.opts{background:var(--panel2);border:1px solid var(--line);border-radius:9px;
+  padding:8px 10px;margin:2px 0 10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:5px 10px}
+.opts>span{grid-column:1/-1;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim)}
+.opts .oc{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--fg)}
+.opts .oc>label{color:var(--dim);font-size:11.5px}
+.opts select{padding:3px 5px;font-size:12px;flex:1;min-width:0}
+.opts input[type=number]{padding:3px 5px;font-size:12px;width:100%}
+
+.out{display:flex;gap:7px;align-items:flex-start}
+.out>code{flex:1;min-width:0;background:var(--panel2);border:1px solid var(--line);
+  border-radius:8px;padding:8px 10px;font-size:13px;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+.out.err>code{border-color:var(--err);color:var(--err)}
+.snip{margin-top:7px;font-size:11px;color:var(--dim);word-break:break-all}
+.cp{flex:none;font-size:11.5px;padding:6px 7px}
+
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:6px 11px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--dim);font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+td.f{color:var(--dim)}
+td.v{font-family:ui-monospace,Menlo,monospace;color:var(--code)}
+.compare{background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  padding:6px 4px;margin:0;overflow-x:auto}
+.empty{color:var(--dim);font-size:13px;padding:30px 0}
+footer{max-width:1180px;margin:0 auto;padding:16px 18px 60px;color:var(--dim);font-size:12.5px;
+  border-top:1px solid var(--line)}
+footer a{margin-right:14px}
+#fatal{display:none;background:#3d1418;border:1px solid var(--err);color:#ffb4ab;
+  padding:13px 18px;border-radius:10px;margin:16px 18px 0;font-size:13.5px}
+</style>
+</head>
+<body>
+
+<div id="fatal"></div>
+
+<header>
+  <div class="bar">
+    <div class="brand">simple-formatter-utility <span id="ver">v1.5.0</span></div>
+    <div class="sp"></div>
+    <div class="g">
+      <span class="lab" for="g-loc">Locale</span>
+      <select id="g-loc"></select>
+    </div>
+    <input id="q" type="search" placeholder="Search…" autocomplete="off" spellcheck="false">
+    <button id="theme" title="Toggle light / dark">◐</button>
+  </div>
+</header>
+
+<main>
+  <p class="lede">
+    Every function below runs <b>live in your browser</b> against the real compiled library —
+    no server, no bundler, no CDN. Change the locale or any input and all formatters update
+    instantly. Everything is built on the native <code>Intl</code> API, so the output is
+    whatever your browser's ICU data produces.
+  </p>
+  <div class="badges">
+    <span class="badge"><b>0</b> dependencies</span>
+    <span class="badge">TypeScript types included</span>
+    <span class="badge">ES2020+ &middot; <b>Intl</b> only</span>
+    <span class="badge" id="env">…</span>
+  </div>
+
+  <h2>One value, every locale</h2>
+  <div class="compare" id="compare"></div>
+
+  <div id="groups"></div>
+  <p class="empty" id="empty" hidden>No function matches that search.</p>
+</main>
+
+<footer>
+  <a href="https://www.npmjs.com/package/simple-formatter-utility">npm</a>
+  <a href="https://github.com/fajriyan/simple-formatter-utility">GitHub</a>
+  <a href="https://github.com/fajriyan/simple-formatter-utility#readme">README</a>
+  <span>MIT licensed.</span>
+</footer>
+
+<script type="module">
+const $ = (s, r = document) => r.querySelector(s);
+const el = (t, p, ...c) => {
+  const n = document.createElement(t);
+  if (p) for (const k in p) {
+    if (k === "class") n.className = p[k];
+    else if (k === "text") n.textContent = p[k];
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), p[k]);
+    else if (k === "checked" || k === "selected" || k === "hidden") n[k] = p[k];
+    else n.setAttribute(k, p[k]);
+  }
+  for (const x of c.flat()) if (x != null) n.append(x instanceof Node ? x : document.createTextNode(x));
+  return n;
+};
+
+/* ------------------------------------------------------------------ *
+ * Load the library. Fails loudly if the ESM build is missing.
+ * ------------------------------------------------------------------ */
+let F;
+try {
+  F = await import("./lib/index.js");
+} catch (err) {
+  const f = $("#fatal");
+  f.style.display = "block";
+  f.append(document.createTextNode(
+    "lib/ is not built. This page imports the compiled library from ./lib/index.js. Run "));
+  f.append(el("code", { text: "npm install && npm run build:esm" }), document.createTextNode(
+    ", then reload. On GitHub Pages the deploy workflow builds it automatically."));
+  throw err;
+}
+
+const LOCALES = ["en-US","en-GB","id-ID","ms-MY","de-DE","fr-FR","es-ES","pt-BR","it-IT",
+  "nl-NL","pl-PL","tr-TR","sv-SE","ru-RU","uk-UA","ar-EG","he-IL","hi-IN","th-TH",
+  "vi-VN","ja-JP","ko-KR","zh-CN","zh-TW"];
+const CURRENCIES = ["USD","EUR","GBP","IDR","JPY","KRW","INR","AUD","CAD","CHF","CNY","BRL","SGD","MYR"];
+const ZONES = F.listAvailableTimeZones();
+const NOTATION = ["standard","compact","scientific","engineering"];
+
+/* Intl.DateTimeFormat option keys, with the widths offered per key. */
+const DOPT = [
+  ["weekday", ["long","short","narrow"]],
+  ["year",    ["numeric","2-digit"]],
+  ["month",   ["numeric","2-digit","long","short","narrow"]],
+  ["day",     ["numeric","2-digit"]],
+  ["hour",    ["numeric","2-digit"]],
+  ["minute",  ["numeric","2-digit"]],
+  ["second",  ["numeric","2-digit"]],
+];
+const HOUR_CYCLE = ["h11","h12","h23","h24"];
+
+/* ------------------------------------------------------------------ *
+ * The API table. One entry per exported function.
+ *   a   [{k:label, v:default, t:type, o:options, dyn:ms-offset}]
+ *   o   "date" | "number"   -> also render an Intl options panel
+ *   od  default options for that panel
+ *   live                    -> re-evaluate every second
+ * ------------------------------------------------------------------ */
+const API = [
+{ t: "Date & Time", f: [
+  { n:"formatDate", s:"(date, locale?, options?)", d:"Full date via Intl.DateTimeFormat.",
+    a:[{k:"date",v:"2023-12-25T14:30:00",t:"t"},{k:"locale",v:"",t:"l"}],
+    o:"date", od:{year:"numeric",month:"2-digit",day:"2-digit"} },
+  { n:"formatTime", s:"(date, locale?, options?)", d:"Time only — defaults to 2-digit hour and minute.",
+    a:[{k:"date",v:"2023-12-25T14:30:00",t:"t"},{k:"locale",v:"",t:"l"}],
+    o:"date", od:{hour:"2-digit",minute:"2-digit"} },
+  { n:"formatDateTime", s:"(date, locale?, options?)", d:"Date and time. Defaults to a long month, down to seconds.",
+    a:[{k:"date",v:"2023-12-25T14:30:00",t:"t"},{k:"locale",v:"",t:"l"}],
+    o:"date", od:{year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"} },
+  { n:"formatISODate", s:"(date)", d:"YYYY-MM-DD, in UTC.",
+    a:[{k:"date",v:"2023-12-25T14:30:00",t:"t"}] },
+  { n:"formatISODateTime", s:"(date)", d:"YYYY-MM-DD HH:MM:SS, in UTC.",
+    a:[{k:"date",v:"2023-12-25T14:30:00",t:"t"}] },
+  { n:"formatWeekday", s:"(date, locale?, weekday?)", d:"Weekday name only.",
+    a:[{k:"date",v:"2023-12-25T14:30:00",t:"t"},{k:"locale",v:"",t:"l"},
+       {k:"width",v:"long",t:"s",o:["long","short","narrow"]}] },
+  { n:"formatMonth", s:"(date, locale?, month?)", d:"Month name only.",
+    a:[{k:"date",v:"2023-12-25T14:30:00",t:"t"},{k:"locale",v:"",t:"l"},
+       {k:"width",v:"long",t:"s",o:["long","short","narrow"]}] },
+  { n:"formatQuarter", s:"(date)", d:"Calendar quarter, Q1 through Q4.",
+    a:[{k:"date",v:"2023-12-25T14:30:00",t:"t"}] },
+  { n:"formatWeekNumber", s:"(date)", d:"ISO-8601 week number.",
+    a:[{k:"date",v:"2023-12-25T14:30:00",t:"t"}] },
+  { n:"formatDayOfYear", s:"(date)", d:"Day of the year, 1 to 366.",
+    a:[{k:"date",v:"2023-12-25T14:30:00",t:"t"}] },
+  { n:"formatDateRange", s:"(start, end, locale?)", d:"Uses Intl formatRange when the browser has it.",
+    a:[{k:"start",v:"2023-12-24",t:"t"},{k:"end",v:"2023-12-25",t:"t"},{k:"locale",v:"",t:"l"}] },
+  { n:"formatAge", s:"(birthDate)", d:"Age in whole years from a birth date.",
+    a:[{k:"birthDate",v:"1990-05-15",t:"t"}] },
+]},
+{ t: "Relative Time & Duration", f: [
+  { n:"formatRelativeTime", s:"(date, baseDate?, locale?)", d:"“2 hours ago”, “in 3 days”.",
+    a:[{k:"date",v:"",t:"t",dyn:-2*3600e3},{k:"baseDate",v:"",t:"t",dyn:0},{k:"locale",v:"",t:"l"}], live:1 },
+  { n:"formatTimeAgo", s:"(date, locale?)", d:"Relative time tuned for past dates.",
+    a:[{k:"date",v:"",t:"t",dyn:-90*60e3},{k:"locale",v:"",t:"l"}], live:1 },
+  { n:"formatTimeAgoDetailed", s:"(date, locale?)", d:"Two largest units: “1 day 1 hour ago”.",
+    a:[{k:"date",v:"",t:"t",dyn:-90*60e3},{k:"locale",v:"",t:"l"}], live:1 },
+  { n:"formatDuration", s:"(seconds, options?)", d:"One seconds value, five output styles.",
+    a:[{k:"seconds",v:93784,t:"n"},{k:"style",v:"short",t:"s",o:["short","compact","long","clock","human"]}] },
+  { n:"formatElapsedTime", s:"(seconds, options?)", d:"Same engine, but defaults to the compact style.",
+    a:[{k:"seconds",v:3661,t:"n"},{k:"style",v:"compact",t:"s",o:["short","compact","long","clock","human"]}] },
+  { n:"formatRelativeDuration", s:"(start, end)", d:"Duration between two dates, compact style.",
+    a:[{k:"start",v:"2023-12-24T00:00:00Z",t:"t"},{k:"end",v:"2023-12-25T06:30:00Z",t:"t"}] },
+]},
+{ t: "Numbers & Currency", f: [
+  { n:"formatNumber", s:"(number, locale?, options?)", d:"Decimal number with locale-aware separators.",
+    a:[{k:"number",v:1234567.891,t:"n"},{k:"locale",v:"",t:"l"}], o:"number", od:{} },
+  { n:"formatCurrency", s:"(amount, currency?, locale?)", d:"Symbol, spacing and placement all follow the locale.",
+    a:[{k:"amount",v:1234567.89,t:"n"},{k:"currency",v:"USD",t:"c"},{k:"locale",v:"",t:"l"}] },
+  { n:"formatPercent", s:"(value, locale?)", d:"0.8567 → 85.67%. Pass a fraction, not a percentage.",
+    a:[{k:"value",v:0.8567,t:"n"},{k:"locale",v:"",t:"l"}] },
+  { n:"formatCompactNumber", s:"(number, locale?, options?)", d:"1250000 → “1.3M”.",
+    a:[{k:"number",v:1250000,t:"n"},{k:"locale",v:"",t:"l"}],
+    o:"number", od:{notation:"compact",maximumFractionDigits:1} },
+  { n:"formatOrdinalNumber", s:"(number, locale?)", d:"22 → “22nd”, resolved with Intl.PluralRules.",
+    a:[{k:"number",v:22,t:"n"},{k:"locale",v:"",t:"l"}] },
+  { n:"formatFileSize", s:"(bytes, locale?)", d:"Binary units, 1024-based: 1 KB = 1024 B.",
+    a:[{k:"bytes",v:1572864,t:"n"},{k:"locale",v:"",t:"l"}] },
+  { n:"formatFileSizeSI", s:"(bytes)", d:"SI units, 1000-based. Always two decimals.",
+    a:[{k:"bytes",v:1572864,t:"n"}] },
+  { n:"formatTemperature", s:"(value, unit?, locale?)", d:"Intl unit formatting with narrow display.",
+    a:[{k:"value",v:25,t:"n"},{k:"unit",v:"celsius",t:"s",o:["celsius","fahrenheit"]},{k:"locale",v:"",t:"l"}] },
+  { n:"formatTwoDigit", s:"(number)", d:"Zero-pads to two digits.",
+    a:[{k:"number",v:5,t:"n"}] },
+  { n:"formatClampNumber", s:"(value, min, max)", d:"Constrains a value into a range.",
+    a:[{k:"value",v:15,t:"n"},{k:"min",v:0,t:"n"},{k:"max",v:10,t:"n"}] },
+]},
+{ t: "Time Zones", f: [
+  { n:"formatTimeZone", s:"(date, timeZone, locale?, options?)", d:"One instant, rendered in another zone.",
+    a:[{k:"date",v:"2023-12-25T10:00:00Z",t:"t"},{k:"timeZone",v:"Asia/Jakarta",t:"z"},{k:"locale",v:"",t:"l"}],
+    o:"date", od:{year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"} },
+  { n:"formatTimezoneOffset", s:"(date?)", d:"Your own offset, as UTC+07:00.",
+    a:[{k:"date",v:"",t:"t",dyn:0}], live:1 },
+  { n:"getTimezoneOffsetString", s:"(date?, timeZone?)", d:"The offset of any zone at any instant — DST aware.",
+    a:[{k:"date",v:"",t:"t",dyn:0},{k:"timeZone",v:"America/New_York",t:"z"}], live:1 },
+  { n:"getUserTimezone", s:"()", d:"The IANA zone detected from this browser.", a:[] },
+  { n:"listAvailableTimeZones", s:"()", d:"Every IANA zone this browser's ICU data knows.",
+    a:[], full:1 },
+  { n:"convertTimezone", s:"(date, timeZone)", d:"A Date whose UTC fields match the given zone.",
+    a:[{k:"date",v:"2023-12-25T10:00:00Z",t:"t"},{k:"timeZone",v:"Asia/Jakarta",t:"z"}] },
+]},
+{ t: "Text & Utility", f: [
+  { n:"formatPhone", s:"(phone)", d:"Strips non-digits, then groups 3-3-rest.",
+    a:[{k:"phone",v:"081234567890",t:"t"}] },
+  { n:"formatBoolean", s:"(value, yes?, no?)", d:"Custom labels for true and false.",
+    a:[{k:"value",v:true,t:"b"},{k:"yes",v:"Yes",t:"t"},{k:"no",v:"No",t:"t"}] },
+  { n:"formatCapitalize", s:"(text)", d:"Uppercases the first character only.",
+    a:[{k:"text",v:"hello world",t:"t"}] },
+  { n:"formatTitleCase", s:"(text)", d:"Uppercases every word.",
+    a:[{k:"text",v:"hello world",t:"t"}] },
+  { n:"formatSlug", s:"(text)", d:"URL-safe ASCII slug.",
+    a:[{k:"text",v:"Hello World! 2024",t:"t"}] },
+  { n:"formatTruncate", s:"(text, maxLength?, suffix?)", d:"Cuts at maxLength, then appends the suffix.",
+    a:[{k:"text",v:"The quick brown fox jumps over the lazy dog",t:"t"},
+       {k:"maxLength",v:15,t:"n"},{k:"suffix",v:"…",t:"t"}] },
+  { n:"formatInitials", s:"(name, max?)", d:"First letters of the first max words.",
+    a:[{k:"name",v:"John Ronald Reuel Tolkien",t:"t"},{k:"max",v:3,t:"n"}] },
+  { n:"formatMaskEmail", s:"(email)", d:"john.doe@… → j***e@…",
+    a:[{k:"email",v:"john.doe@example.com",t:"t"}] },
+  { n:"formatMaskPhone", s:"(phone, visible?)", d:"Masks every digit but the last few.",
+    a:[{k:"phone",v:"081234567890",t:"t"},{k:"visible",v:4,t:"n"}] },
+  { n:"formatJsonPretty", s:"(value, space?)", d:"JSON.stringify with indentation. Type any JSON literal.",
+    a:[{k:"value",v:'{"name":"John","age":30,"tags":["a","b"]}',t:"j"},{k:"space",v:2,t:"n"}] },
+]},
+{ t: "Parsing", f: [
+  { n:"parseCurrency", s:"(value, locale?)", d:"String to number. Pass the locale the string was written in.",
+    a:[{k:"value",v:"$1,234.56",t:"t"},{k:"locale",v:"",t:"l"}] },
+  { n:"parseNumber", s:"(value, locale?)", d:"Same, with no currency assumption.",
+    a:[{k:"value",v:"1.234,56",t:"t"},{k:"locale",v:"de-DE",t:"l"}] },
+  { n:"parseBoolean", s:"(value)", d:"“true”, “1”, “yes” → true. Anything else → false.",
+    a:[{k:"value",v:"yes",t:"t"}] },
+]},
+];
+
+const ALL = [];
+$("#q").placeholder = `Search ${API.reduce((n, g) => n + g.f.length, 0)} functions…`;
+$("#env").textContent = `${F.getUserTimezone()} · ${ZONES.length} zones`;
+
+/* ---------- argument -> JS source literal ---------- */
+function lit(a) {
+  const v = a.v;
+  if (a.t === "l") return v ? JSON.stringify(v) : "undefined";
+  if (a.t === "n") return String(Number(v) || 0);
+  if (a.t === "b") return v ? "true" : "false";
+  if (a.t === "j") return String(v);
+  return JSON.stringify(String(v));
+}
+const optSrc = (o) => {
+  const p = [];
+  for (const k in o) if (o[k] !== "" && o[k] != null) p.push(`${k}: ${JSON.stringify(o[k])}`);
+  return p.length ? "{ " + p.join(", ") + " }" : "{}";
+};
+const evaluate = (code) => new Function("F", "return (" + code + ")")(F);
+const human = (a) => (a.t === "l" && !a.v ? "locale" : String(a.v));
+
+/* ---------- one card ---------- */
+function build(f) {
+  f.oo = Object.assign({}, f.od);
+  f.out = el("code");
+  f.snip = el("code");
+
+  const card = el("div", { class: "card" },
+    el("div", { class: "fn" }, f.n),
+    el("div", { class: "sig" }, "simple-formatter-utility" + f.s),
+    el("p", { class: "desc" }, f.d));
+  f.card = card;
+
+  for (const a of f.a) card.append(field(f, a));
+  if (f.o) card.append(optPanel(f));
+
+  card.append(
+    el("div", { class: "out" }, f.out,
+      el("button", { class: "cp", title: "Copy snippet", onclick: () => copy(f) }, "copy")),
+    el("div", { class: "snip" }, f.snip));
+  return f;
+}
+
+function field(f, a) {
+  const id = f.n + "." + a.k;
+  const row = el("div", { class: "row" }, el("label", { for: id }, a.k));
+  let inp;
+
+  if (a.t === "b") {
+    row.className = "row chk";
+    inp = el("input", { type: "checkbox", id, checked: !!a.v });
+  } else if (a.t === "s") {
+    inp = el("select", { id });
+    for (const o of a.o) inp.append(el("option", { value: o, selected: o === a.v }, o));
+  } else if (a.t === "l") {
+    inp = el("select", { id, class: "loc" });
+    inp.append(el("option", { value: "" }, "— default —"));
+    for (const l of LOCALES) inp.append(el("option", { value: l, selected: l === a.v }, l));
+  } else if (a.t === "c") {
+    inp = el("select", { id });
+    for (const c of CURRENCIES) inp.append(el("option", { value: c, selected: c === a.v }, c));
+  } else if (a.t === "z") {
+    inp = el("select", { id });
+    for (const z of ZONES) inp.append(el("option", { value: z, selected: z === a.v }, z));
+  } else {
+    inp = el("input", { type: a.t === "n" ? "number" : "text", id, value: a.v });
+  }
+
+  const sync = () => {
+    a.v = a.t === "b" ? inp.checked
+      : a.t === "n" ? (inp.value === "" ? 0 : Number(inp.value))
+      : inp.value;
+    if (a.t === "l") setGlobal(inp.value);
+    paint(f);
+  };
+  inp.addEventListener("input", sync);
+  inp.addEventListener("change", sync);
+  row.append(inp);
+  return row;
+}
+
+function optPanel(f) {
+  const wrap = el("div", { class: "opts" },
+    el("span", {}, f.o === "date" ? "Intl.DateTimeFormat options" : "Intl.NumberFormat options"));
+
+  if (f.o === "date") {
+    for (const [key, vals] of DOPT) {
+      const sel = el("select");
+      sel.append(el("option", { value: "" }, "—"));
+      for (const v of vals) sel.append(el("option", { value: v, selected: f.oo[key] === v }, v));
+      sel.addEventListener("change", () => { f.oo[key] = sel.value; paint(f); });
+      wrap.append(el("div", { class: "oc" }, el("label", {}, key), sel));
+    }
+    for (const [key, vals] of [["hourCycle", HOUR_CYCLE]]) {
+      const sel = el("select");
+      sel.append(el("option", { value: "" }, "—"));
+      for (const v of vals) sel.append(el("option", { value: v, selected: f.oo[key] === v }, v));
+      sel.addEventListener("change", () => { f.oo[key] = sel.value; paint(f); });
+      wrap.append(el("div", { class: "oc" }, el("label", {}, key), sel));
+    }
+  } else {
+    const sel = el("select");
+    sel.append(el("option", { value: "" }, "—"));
+    for (const v of NOTATION) sel.append(el("option", { value: v, selected: f.oo.notation === v }, v));
+    sel.addEventListener("change", () => { f.oo.notation = sel.value; paint(f); });
+    wrap.append(el("div", { class: "oc" }, el("label", {}, "notation"), sel));
+
+    const fx = el("input", { type: "number", min: 0, max: 20, value: f.oo.maximumFractionDigits ?? "" });
+    fx.addEventListener("input", () => {
+      f.oo.maximumFractionDigits = fx.value === "" ? "" : Number(fx.value);
+      paint(f);
+    });
+    wrap.append(el("div", { class: "oc" }, el("label", {}, "maxFrac"), fx));
+  }
+  return wrap;
+}
+
+function paint(f) {
+  const args = f.a.map(lit);
+  if (f.o) args.push(optSrc(f.oo));
+  const code = "F." + f.n + "(" + args.join(", ") + ")";
+
+  let v;
+  try {
+    v = evaluate(code);
+    f.out.parentElement.className = "out";
+  } catch (e) {
+    f.out.parentElement.className = "out err";
+    f.out.textContent = e.message.replace(/^Error:\s*/, "");
+    f.snip.textContent = "";
+    return;
+  }
+  if (Array.isArray(v))
+    f.out.textContent = `Array(${v.length})\n` + v.slice(0, 6).join("\n") + (v.length > 6 ? "\n…" : "");
+  else if (v && typeof v === "object") f.out.textContent = JSON.stringify(v, null, 2);
+  else f.out.textContent = String(v);
+  f.snip.textContent = `${f.n}(${f.a.map(human).join(", ")});`;
+}
+
+async function copy(f) {
+  const args = f.a.map(lit);
+  if (f.o) args.push(optSrc(f.oo));
+  const btn = $("button", f.out.parentElement);
+  try {
+    await navigator.clipboard.writeText(
+      `import { ${f.n} } from "simple-formatter-utility";\n\n${f.n}(${args.join(", ")});`);
+    btn.textContent = "copied";
+  } catch { btn.textContent = "ctrl+c"; }
+  setTimeout(() => { btn.textContent = "copy"; }, 1200);
+}
+
+/* ---------- one global locale drives every locale argument ---------- */
+const gsel = $("#g-loc");
+gsel.append(el("option", { value: "" }, "— default (en-US) —"));
+for (const l of LOCALES) gsel.append(el("option", { value: l }, l));
+gsel.addEventListener("change", () => setGlobal(gsel.value));
+function setGlobal(v) {
+  gsel.value = v;
+  for (const s of document.querySelectorAll("select.loc")) s.value = v;
+  for (const f of ALL) {
+    const la = f.a.find((a) => a.t === "l");
+    if (la) la.v = v;
+  }
+  for (const f of ALL) paint(f);
+}
+
+/* ---------- side-by-side locale table ---------- */
+const SHOW = ["en-US","id-ID","de-DE","fr-FR","ja-JP","ar-EG"];
+const CMP = [
+  ["Date",        'F.formatDate("2023-12-25T14:30:00Z", L)'],
+  ["Date & time", 'F.formatDateTime("2023-12-25T14:30:00Z", L)'],
+  ["Number",      'F.formatNumber(1234567.891, L)'],
+  ["Currency",    'F.formatCurrency(1234567.89, "USD", L)'],
+  ["Percent",     'F.formatPercent(0.8567, L)'],
+  ["Compact",     'F.formatCompactNumber(1250000, L)'],
+  ["File size",   'F.formatFileSize(1572864, L)'],
+  ["Ordinal",     'F.formatOrdinalNumber(22, L)'],
+  ["Weekday",     'F.formatWeekday("2023-12-25T14:30:00Z", L)'],
+  ["Relative",    'F.formatRelativeTime(new Date(Date.now() - 5400000), undefined, L)'],
+];
+(function paintCompare() {
+  const t = el("table");
+  t.append(el("tr", {}, el("th", {}, "value"), ...SHOW.map((l) => el("th", {}, l))));
+  for (const [label, code] of CMP) {
+    const cells = SHOW.map((l) => {
+      const src = code.replace("L", JSON.stringify(l));
+      try { return el("td", { class: "v" }, String(evaluate(src))); }
+      catch (e) { return el("td", { class: "v", style: "color:var(--err)" }, e.message); }
+    });
+    t.append(el("tr", {}, el("td", { class: "f" }, label), ...cells));
+  }
+  $("#compare").append(t);
+})();
+
+/* ---------- boot ---------- */
+for (const g of API) {
+  const sec = el("h2", { "data-g": g.t }, g.t, el("span", { class: "n" }, String(g.f.length)));
+  const grid = el("div", { class: "grid", "data-g": g.t });
+  for (const f of g.f) {
+    for (const a of f.a) if (a.dyn !== undefined) a.v = new Date(Date.now() + a.dyn).toISOString();
+    const built = build(f);
+    paint(built);
+    ALL.push(built);
+    grid.append(built.card);
+  }
+  $("#groups").append(sec, grid);
+}
+
+/* ---------- search ---------- */
+$("#q").addEventListener("input", (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  let hits = 0;
+  for (const f of ALL) {
+    const hit = !q || (f.n + " " + f.s + " " + f.d).toLowerCase().includes(q);
+    f.card.style.display = hit ? "" : "none";
+    f.card.classList.toggle("hit", !!q && hit);
+    if (hit) hits++;
+  }
+  for (const grid of document.querySelectorAll(".grid")) {
+    const any = [...grid.children].some((c) => c.style.display !== "none");
+    grid.style.display = any ? "" : "none";
+    grid.previousElementSibling.style.display = any ? "" : "none";
+  }
+  $("#empty").hidden = !!hits;
+});
+
+/* ---------- clock-driven cards ---------- */
+setInterval(() => {
+  for (const f of ALL) if (f.live) {
+    for (const a of f.a) if (a.dyn !== undefined) a.v = new Date(Date.now() + a.dyn).toISOString();
+    paint(f);
+  }
+}, 1000);
+
+/* ---------- theme ---------- */
+const root = document.documentElement;
+root.dataset.theme = localStorage.getItem("sfu-theme")
+  || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+$("#theme").addEventListener("click", () => {
+  root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+  localStorage.setItem("sfu-theme", root.dataset.theme);
+});
+
+addEventListener("keydown", (e) => {
+  if (e.key === "/" && document.activeElement !== $("#q")) { e.preventDefault(); $("#q").focus(); }
+});
+</script>
+</body>
+</html>

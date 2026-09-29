@@ -8,7 +8,67 @@ A comprehensive TypeScript utility library for internationalization (i18n) forma
 [![license](https://img.shields.io/npm/l/simple-formatter-utility.svg)](https://www.npmjs.com/package/simple-formatter-utility)
 [![bundlephobia](https://img.shields.io/bundlephobia/minzip/simple-formatter-utility)](https://bundlephobia.com/result?p=simple-formatter-utility)
 [![GitHub issues](https://img.shields.io/github/issues/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/issues)
-[![GitHub last commit](https://img.shields.io/github/last-commit/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/commits)\n\n## Features\n\n- 🌍 **Full Locale Support**: Uses native Intl API for accurate locale-specific\n  formatting\n- 📅 **Date & Time Formatting**: Comprehensive date, time, and datetime\n  formatting\n- 💰 **Currency & Numbers**: Format currencies, percentages, and numbers with\n  locale awareness\n- 📏 **File Sizes & Units**: Human-readable file sizes and temperature\n  formatting\n- ⏱️ **Relative Time**: \"2 hours ago\", \"in 3 days\" style formatting\n- 🔧 **Utility Functions**: Phone masking, email masking, text formatting, and\n  more\n- 📦 **Zero Dependencies**: Built on native browser APIs\n- 🏷️ **TypeScript Support**: Full type definitions included\n\n## Installation\n\n```bash\nnpm install simple-formatter-utility\n```\n\n## Quick Start\n\n```typescript\nimport {\n   formatDate,\n   formatCurrency,\n   formatNumber,\n   formatRelativeTime,\n} from \"simple-formatter-utility\";\n\n// Basic usage with default locale (en-US)\nconsole.log(formatDate(new Date())); // \"12/25/2023\"\nconsole.log(formatCurrency(1234.56, \"USD\")); // \"$1,234.56\"\nconsole.log(formatNumber(1234567.89)); // \"1,234,567.89\"\nconsole.log(formatRelativeTime(new Date(Date.now() - 3600000))); // \"1 hour ago\"\n\n// With custom locale\nconsole.log(formatDate(new Date(), \"id-ID\")); // \"25/12/2023\"\nconsole.log(formatCurrency(1234.56, \"IDR\", \"id-ID\")); // \"Rp1.234,56\"\n```
+[![GitHub last commit](https://img.shields.io/github/last-commit/fajriyan/simple-formatter-utility)](https://github.com/fajriyan/simple-formatter-utility/commits)
+
+**[▶ Live playground](https://fajriyan.github.io/simple-formatter-utility/)** — try all 46
+formatters in your browser, side by side across locales, with every argument editable.
+
+## Features
+
+- 🌍 **Full Locale Support**: Uses native Intl API for accurate locale-specific
+  formatting
+- 📅 **Date & Time Formatting**: Comprehensive date, time, and datetime
+  formatting
+- 💰 **Currency & Numbers**: Format currencies, percentages, and numbers with
+  locale awareness
+- 📏 **File Sizes & Units**: Human-readable file sizes and temperature
+  formatting
+- ⏱️ **Relative Time**: "2 hours ago", "in 3 days" style formatting
+- 🔧 **Utility Functions**: Phone masking, email masking, text formatting, and
+  more
+- 📦 **Zero Dependencies**: Built on native browser APIs
+- 🏷️ **TypeScript Support**: Full type definitions included
+
+## Installation
+
+```bash
+npm install simple-formatter-utility
+```
+
+## Running the playground locally
+
+The playground in [`docs/index.html`](docs/index.html) imports an ESM build of the
+library, so build it once and serve the folder over any static server:
+
+```bash
+npm install
+npm run build:esm   # emits docs/lib/*.js
+npx --yes serve docs
+```
+
+Every push to `main` rebuilds and publishes it via
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml).
+
+## Quick Start
+
+```typescript
+import {
+   formatDate,
+   formatCurrency,
+   formatNumber,
+   formatRelativeTime,
+} from "simple-formatter-utility";
+
+// Basic usage with default locale (en-US)
+console.log(formatDate(new Date())); // "12/25/2023"
+console.log(formatCurrency(1234.56, "USD")); // "$1,234.56"
+console.log(formatNumber(1234567.89)); // "1,234,567.89"
+console.log(formatRelativeTime(new Date(Date.now() - 3600000))); // "1 hour ago"
+
+// With custom locale
+console.log(formatDate(new Date(), "id-ID")); // "25/12/2023"
+console.log(formatCurrency(1234.56, "IDR", "id-ID")); // "Rp1.234,56"
+```
 
 ## API Reference
 
@@ -358,7 +418,7 @@ formatMaskEmail("john.doe@example.com"); // "j***e@example.com"
 Masks phone number.
 
 ```typescript
-formatMaskPhone("081234567890", 4); // "****67890"
+formatMaskPhone("081234567890", 4); // "********7890"
 ```
 
 #### `formatJsonPretty(value, space?)`
