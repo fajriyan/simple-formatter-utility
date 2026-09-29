@@ -68,12 +68,10 @@ export function formatTemperature(
   unit: "celsius" | "fahrenheit" = "celsius",
   locale = "en-US",
 ) {
-  const intlUnit = unit === "celsius" ? "degree-celsius" : "degree-fahrenheit";
-
   return new Intl.NumberFormat(locale, {
     style: "unit",
-    unit: intlUnit as Intl.NumberFormatOptions["unit"],
-    unitDisplay: "narrow",
+    unit,
+    unitDisplay: "short",
     maximumFractionDigits: 1,
   }).format(value);
 }
